@@ -1,0 +1,16 @@
+Test ID,Status,Execution Notes
+TC_AI_001,Blocked,Top AUM Growth card not available with computed value; only Highest Satisfaction card shown as TBD.
+TC_AI_005,Blocked,Most Net New Money KPI card not rendered with usable data in current page state.
+TC_AI_008,Blocked,Best Client Retention KPI card not rendered with usable data in current page state.
+TC_AI_010,Blocked,"Highest Satisfaction displays TBD, so weighted formula validation cannot be completed."
+TC_AI_016,Blocked,AUM trend chart shows empty state: No AUM trend data available.
+TC_AI_017,Blocked,All-month x-axis coverage cannot be validated because trend series is not rendered.
+TC_AI_019,Blocked,Legend-to-line mapping cannot be validated due no plotted advisor lines.
+TC_AI_020,Blocked,Legend toggle interaction cannot be validated due no plotted advisor lines.
+TC_AI_021,Blocked,Hover tooltip values cannot be validated due no trend datapoints.
+TC_AI_031,Blocked,Detailed Comparison table has headers but no advisor rows.
+TC_AI_043,Pass (Partial),Sorting interaction verified on YTD Growth and AUM headers by arrow/state toggle. Full all-column sort validation pending data rows.
+TC_AI_070,Pass,TBD/empty-state handling is graceful without page crash (TBD card and no-data chart message).
+TC_AI_080,Pass,Navigation regression validated: moved to Firm Dashboard via breadcrumb and returned to Advisor Intelligence via left sidebar.
+TC_AI_073,Blocked,Gold-layer-only sourcing cannot be validated from UI alone; page currently shows backend 422 partial-data errors.
+TC_AI_074,Blocked,advisor_id consistency cannot be validated because advisor-level rows/series are not present in current payload rendering.

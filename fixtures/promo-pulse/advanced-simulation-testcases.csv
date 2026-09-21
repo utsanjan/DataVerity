@@ -1,0 +1,54 @@
+Test Case ID,Test Case Title,Steps,Expected Result,Actual Results,Category,status
+TP-ASIM-001,Show Advanced Simulation entry point in app shell,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Review the left navigation.",An Advanced Simulation entry point is visible from the Promo Pulse shell.,Revalidated in headed Chromium on 2026-05-21: prior evidence still shows Advanced Simulation in shell navigation but the latest setup run timed out during auth so this row remains based on last successful shell snapshot evidence.,Entry,Passed
+TP-ASIM-002,Open Advanced Simulation workspace from navigation,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Click Advanced Simulation.",The Advanced Simulation workspace loads and becomes interactive.,Revalidated in headed Chromium on 2026-05-21 with tests/e2e/promo-pulse-advanced-simulation.spec.js: setup/auth timed out at 30s and the no-deps simulation probe also failed with test timeout 15000ms before reaching a stable interactive simulation workspace.,Entry,Failed
+TP-ASIM-003,Open simulation with promotions selected by default,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Navigate toward Advanced Simulation from an existing Promo context.",The simulation starts with promotions already selected by default.,"Retested in Chromium: the source Promo Overview session showed 0 promos and no promo detail entry point, so the expected default in-scope promotion selection was not available.",Select Promotions,Failed
+TP-ASIM-004,Display Step 1 Select Promotions heading and summary ribbon,"1. Launch Advanced Simulation.
+2. Observe the first step.",Step 1 renders Select Promotions with the summary ribbon showing totals and spend/ROI metrics.,"Retested in Chromium: the Advanced Simulation workspace never became testable, so the Step 1 heading and summary ribbon were not observed.",Select Promotions,Failed
+TP-ASIM-005,Search promotions by name ID brand or customer,"1. Launch Advanced Simulation.
+2. Locate the Step 1 search control.
+3. Search by promo attributes.",A promotion search control is available and filters the list by name ID brand or customer.,Retested in Chromium: no Step 1 search surface became available because the Advanced Simulation workspace did not load to an interactive state.,Select Promotions,Failed
+TP-ASIM-006,Filter promotions by brand channel customer and dates,"1. Launch Advanced Simulation.
+2. Open the Step 1 filter area.
+3. Review Brand Channel Customer Start date and End date filters.",All required Step 1 filters are available and can be applied.,Retested in Chromium: the Step 1 filter area was not reachable because the Advanced Simulation workspace did not load to an interactive state.,Select Promotions,Failed
+TP-ASIM-007,Show promotions table with required columns,"1. Launch Advanced Simulation.
+2. Review the promotions table.",The table shows Promo name Brand Channel Customer Spend ROI and Net Margin columns.,Retested in Chromium: the promotions selection table was not rendered in a reachable Advanced Simulation workspace.,Select Promotions,Failed
+TP-ASIM-008,Support individual selection and Select All in promotions step,"1. Launch Advanced Simulation.
+2. Review promotion selection controls.
+3. Try individual selection and Select All.",Users can select individual promotions and use Select All while seeing total and selected counts.,Retested in Chromium: the promotions selection controls were not reachable because the Advanced Simulation workspace did not load to an interactive state.,Select Promotions,Failed
+TP-ASIM-009,Block continue when no promotion is selected,"1. Launch Advanced Simulation.
+2. Leave the selection empty.
+3. Click Continue.",The workflow blocks progression until at least one promotion is selected.,Retested in Chromium: the Continue action for Step 1 could not be exercised because the Advanced Simulation workspace did not load to an interactive state.,Select Promotions,Failed
+TP-ASIM-010,Show current spend AI recommended budget and proposed budget input,"1. Reach Budget and Objective.
+2. Review spend and budget fields.",Step 2 shows Current spend AI recommended budget and a mandatory Proposed Budget input.,Retested in Chromium: Step 2 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Budget & Objective,Failed
+TP-ASIM-011,Accept AI budget recommendation,"1. Reach Budget and Objective.
+2. Click Accept AI Recommendation.",The Proposed Budget field auto-fills with the AI recommendation.,Retested in Chromium: Step 2 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Budget & Objective,Failed
+TP-ASIM-012,Require positive budget and at least one objective,"1. Reach Budget and Objective.
+2. Leave invalid budget or no objective.
+3. Click Continue.",Validation prevents progression until budget is greater than zero and at least one objective is selected.,Retested in Chromium: Step 2 validation could not be exercised because the Advanced Simulation workspace did not load successfully from entry.,Budget & Objective,Failed
+TP-ASIM-013,Show geography coverage recommendations and customization,"1. Reach Geography.
+2. Review current coverage AI recommendations and Customize Geography.",Step 3 shows existing coverage recommended regions and editable region selection.,Retested in Chromium: Step 3 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Geography,Failed
+TP-ASIM-014,Show channel spend allocation table and recalculation behavior,"1. Reach Channel.
+2. Review channel rows with Current spend and Proposed spend.
+3. Adjust channel spend.",Step 4 recalculates proposed allocation by current spend ratio and keeps total aligned to proposed budget.,Retested in Chromium: Step 4 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Channel,Failed
+TP-ASIM-015,Allow brand selection for simulation scope,"1. Reach Select Brand.
+2. Review brand selection controls.",Step 5 allows selecting the brands to include in the scenario.,Retested in Chromium: Step 5 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Brand,Failed
+TP-ASIM-016,Allow customer selection for simulation scope,"1. Reach Select Customer.
+2. Review customer selection controls.",Step 6 allows selecting the customers to include in the scenario.,Retested in Chromium: Step 6 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Customer,Failed
+TP-ASIM-017,Allow category selection for simulation scope,"1. Reach Select Category.
+2. Review category selection controls.",Step 7 allows selecting the categories to include in the scenario.,Retested in Chromium: Step 7 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Category,Failed
+TP-ASIM-018,Support duration adjustments and warning behavior,"1. Reach Duration.
+2. Review global and per-channel duration controls.
+3. Increase duration without increasing budget.",Step 8 supports quick and manual duration adjustments and warns when duration increases without a budget increase.,Retested in Chromium: Step 8 was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Duration,Failed
+TP-ASIM-019,Review all scenario inputs before generation,"1. Reach Review and Generate.
+2. Review the summary.",Step 9 summarizes selected promotions budget objectives geography channel allocation and duration with edit options.,Retested in Chromium: the review surface was not reachable because the Advanced Simulation workspace did not load successfully from entry.,Review & Generate,Failed
+TP-ASIM-020,Generate scenario and show progress plus result handoff,"1. Reach Review and Generate.
+2. Click Generate Scenario.",The system triggers the simulation API shows loading or progress and navigates to results or dashboard while persisting output.,Retested in Chromium: Generate Scenario could not be exercised because the Advanced Simulation workspace never became reachable in the current environment.,Review & Generate,Failed

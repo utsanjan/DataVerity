@@ -1,0 +1,417 @@
+Test Case ID,Test Case Title,Steps,Expected Result,Actual Results,Category,status
+TP-CHOV-001,View Total Spend KPI card,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Locate the Total Spend KPI card in the KPI navigator.",The Total Spend KPI card is visible with a value and supports opening its intelligence workspace.,Retested in the headed suite: the Total Spend KPI card rendered in the navigator and opened its intelligence workspace successfully.,KPI Navigator,Passed
+TP-CHOV-002,View Incremental Revenue KPI card,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Locate the Incremental Revenue KPI card in the KPI navigator.",The Incremental Revenue KPI card is visible with a value and supports opening its intelligence workspace.,Retested in the headed suite: the Incremental Revenue KPI card rendered in the navigator and opened its intelligence workspace successfully.,KPI Navigator,Passed
+TP-CHOV-003,Navigate between KPI views,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend KPI intelligence workspace.
+6. Open the Incremental Revenue KPI intelligence workspace.
+7. Return to the overview and repeat with the other KPI cards.",Each KPI selection updates the active intelligence workspace without breaking the Channel Overview shell.,Retested in the headed suite: KPI navigation worked across the supported cards and the page stayed interactive.,KPI Navigator,Passed
+TP-CHOV-004,View Avg Channel ROI KPI card,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Locate the Avg Channel ROI KPI card in the KPI navigator.",The Avg Channel ROI KPI card is visible with a value in the KPI navigator.,Retested in the headed suite: the Avg Channel ROI KPI card rendered with a value in the KPI navigator.,KPI Navigator,Passed
+TP-CHOV-005,View Promo Efficiency KPI card,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Locate the Promo Efficiency KPI card in the KPI navigator.",The Promo Efficiency KPI card is visible with a value in the KPI navigator.,Retested in the headed suite: the Promo Efficiency KPI card rendered with a value in the KPI navigator.,KPI Navigator,Passed
+TP-CHOV-006,View Trade Spend Effectiveness KPI card,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Locate the Trade Spend Effectiveness KPI card in the KPI navigator.",The Trade Spend Effectiveness KPI card is visible with a value in the KPI navigator.,Retested in the headed suite: the Trade Spend Effectiveness KPI card rendered with a value in the KPI navigator.,KPI Navigator,Passed
+TP-CHOV-007,Open KPI detail intelligence panel,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a supported KPI card such as Total Spend or Incremental Revenue.
+6. Wait for the intelligence workspace to load.",Selecting a supported KPI opens the related intelligence workspace with charts or insight content.,Retested in the headed suite: supported KPI cards opened their intelligence workspaces and the content loaded.,KPI Navigator,Passed
+TP-CHOV-010,Select custom date range in filters,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Expand the filter bar.
+6. Inspect the Time Period controls for a custom date range option.",A custom date range selector is available and can be applied from the filter bar.,Retested in the headed story-gap suite: the documented custom date range selector is still not exposed in the Channel Overview filter bar.,Common Filter Bar,Failed
+TP-CHOV-011,Filter by channel,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Expand the filter bar.
+6. Apply one or more Channel filters.
+7. Review the portfolio, cards, and table state.",The Channel filter applies successfully and updates the visible channel workspace.,Retested in the headed suite: Channel filters applied successfully and the filtered workspace remained usable.,Common Filter Bar,Passed
+TP-CHOV-012,Filter by region,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Expand the filter bar.
+6. Apply Region selections.
+7. Switch between Channel Overview subviews and confirm the selected regions persist.",Region selections apply and remain active while navigating within the Channel Overview page.,Retested in the headed suite: Region selections persisted across the supported view switches.,Common Filter Bar,Passed
+TP-CHOV-013,Filter by ROI Band,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Expand the filter bar.
+6. Set ROI Band to High (>=2x).
+7. Review the visible portfolio after the filter applies.",Only channels matching the High ROI Band filter remain visible and the page stays usable.,Retested in the headed suite: the High ROI Band filter applied and the filtered portfolio remained usable.,Common Filter Bar,Passed
+TP-CHOV-014,Clear all applied filters,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Apply Channel, Region, or ROI Band filters.
+6. Use Clear all from the filter area.
+7. Confirm the overview returns to its default broad state.",All applied filters are cleared and the overview returns to its default state.,Retested in the headed suite: Clear all reset the applied filters and restored the default broad overview state.,Common Filter Bar,Passed
+TP-CHOV-020,Channel Insights workspace opens from KPI card,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a supported KPI card such as Total Spend.
+6. Wait for the intelligence workspace to load.",The intelligence workspace opens and displays channel insight content for the selected KPI.,Retested in the headed suite: the supported KPI intelligence workspace opened and displayed the currently implemented insight content.,Intelligence & Analysis,Passed
+TP-CHOV-021,View all Channel Insights,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend KPI intelligence workspace.
+6. Confirm the full Channel Insights workspace is available.",The Channel Insights workspace is accessible from the Channel Overview KPI flow.,Retested in the headed suite: the full Channel Insights workspace opened from the KPI flow.,Intelligence & Analysis,Passed
+TP-CHOV-022,Display Spend by Channel chart,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend KPI intelligence workspace.
+6. Review the current chart set.",The intelligence workspace renders the currently implemented spend-related channel chart content.,Retested in the headed suite: the current spend-related intelligence charts rendered successfully.,Intelligence & Analysis,Passed
+TP-CHOV-023,Display Structural Strength Radar,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend KPI intelligence workspace.
+6. Look for the documented Structural Strength Radar visualization.",The Structural Strength Radar chart is visible in the Total Spend intelligence workspace.,Retested in the headed story-gap suite: the documented Structural Strength Radar chart is still not rendered in the live Total Spend intelligence workspace.,Intelligence & Analysis,Failed
+TP-CHOV-024,Display ROI Elasticity by Discount Band chart,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend KPI intelligence workspace.
+6. Look for the documented ROI Elasticity by Discount Band chart.",The ROI Elasticity by Discount Band chart is visible in the Total Spend intelligence workspace.,Retested in the headed story-gap suite: the documented ROI Elasticity by Discount Band chart is still not rendered in the live Total Spend intelligence workspace.,Intelligence & Analysis,Failed
+TP-CHOV-025,Display Allocation Spend vs Revenue Share chart,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend KPI intelligence workspace.
+6. Look for the documented Allocation: Spend vs Revenue Share chart.",The Allocation: Spend vs Revenue Share chart is visible in the Total Spend intelligence workspace.,Retested in the headed story-gap suite: the documented Allocation: Spend vs Revenue Share chart is still not rendered in the live Total Spend intelligence workspace.,Intelligence & Analysis,Failed
+TP-CHOV-026,Switch between insight tabs or panels,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a supported KPI intelligence workspace.
+6. Switch between the available insight panels or views.",Available insight panels can be switched without breaking the workspace.,Retested in the headed suite: the available insight views switched successfully inside the current workspace.,Intelligence & Analysis,Passed
+TP-CHOV-030,Open Channels tab,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Channels area of the portfolio.",The Channels area opens and shows the current portfolio data.,Retested in the headed suite: the Channels area opened successfully and showed the portfolio data.,Channels Tab,Passed
+TP-CHOV-031,Switch between Card and Table view,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Channels area.
+6. Switch between Card view and Table view.",Both Card view and Table view are available and switch without breaking the module.,Retested in the headed suite: both Card view and Table view were available and switched successfully.,Channels Tab,Passed
+TP-CHOV-032,Sort channels by spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Switch to Table view.
+6. Sort the table by Spend.
+7. Review the row order.",The channel table sorts correctly by Spend.,Retested in the headed suite: the channel table sorted correctly by Spend.,Channels Tab,Passed
+TP-CHOV-033,Search channel by name,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Switch to Table view.
+6. Search for a known channel by name.
+7. Review the filtered result set.",Search filters the table to matching channel names and keeps the table interactive.,Retested in the headed suite: channel search filtered the table correctly and the table remained interactive.,Channels Tab,Passed
+TP-CHOV-034,Display channel columns in table,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Switch to Table view.
+6. Review the visible columns in the channel table.",The expected channel columns are visible in the table view.,Retested in the headed suite: the expected columns were visible in the channel table.,Channels Tab,Passed
+TP-CHOV-035,Open channel detail page,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Switch to Table view.
+6. Open a channel row from the table.",Selecting a channel opens the channel detail page.,Retested in the headed suite: a channel row opened the channel detail page successfully.,Channels Tab,Passed
+TP-CHOV-036,Display channel detail metrics and diagnostics,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a channel detail page from the table.
+6. Review the visible metrics, diagnostics, and detail sections.",The channel detail page shows the implemented metrics and diagnostics content.,"Retested in the headed suite: the channel detail page displayed the current metrics, diagnostics, and detail sections.",Channels Tab,Passed
+TP-CHOV-040,All core KPI cards are visible,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the KPI navigator.",The core KPI cards required for the overview are visible in the navigator.,Retested in the headed suite: the core KPI cards were visible in the navigator.,Negative Cases,Passed
+TP-CHOV-041,Show empty state when search has no matches,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Switch to Table view.
+6. Search for a nonexistent channel name.
+7. Review the resulting table state.",An explicit empty-state message or empty-state treatment is shown when no rows match the search.,Retested in the headed suite: a no-result search showed the expected empty-state treatment.,Negative Cases,Passed
+TP-CHOV-042,Gracefully handle invalid or out-of-range date input,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Expand the filter bar.
+6. Inspect the date controls for the documented custom range entry path.",The page exposes a custom date entry path and handles invalid or out-of-range input gracefully.,"Retested in the headed story-gap suite: the documented custom date entry path is still unavailable, so invalid or out-of-range entry handling could not be exercised.",Negative Cases,Failed
+TP-CHOV-043,Handle no insight data available scenario,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Navigate to a state where Channel Insights has no available content.
+6. Review the insight workspace message.",A clear no-data message is shown when no Channel Insights content is available.,"The live environment can show 'No insights available for the selected filters.', but this case was not directly rerun in the latest headed pass.",Negative Cases,Not Covered
+TP-CHOV-050,Page loads within acceptable time,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Wait for the overview shell and role-addressable controls to appear.",The overview becomes usable within an acceptable load time for the test environment.,Retested in the headed suite: the overview became usable and the page remained interactive during the serial run.,Non-Functional,Passed
+TP-CHOV-051,Responsive layout on desktop,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the module at desktop width.",The module remains usable at desktop width with addressable controls.,Retested in the headed suite: the module remained usable at desktop width with role-addressable controls.,Non-Functional,Passed
+TP-CHOV-052,Support tablet layout or reduced viewport,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the module in a reduced viewport or tablet-sized layout.",The module remains usable in a reduced viewport or tablet layout.,This viewport-specific behavior was not directly rerun in the latest headed pass.,Non-Functional,Not Covered
+TP-CHOV-053,Show tooltip on hover for chart element,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a supported intelligence chart.
+6. Hover a chart element.",A tooltip appears for the hovered chart element when supported by the live chart implementation.,Tooltip behavior was not directly rerun in the latest headed pass.,Data Validation,Not Covered
+TP-CHOV-054,Cross-check KPI values against chart context,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Compare KPI cards with the related chart context in the current workspace.",KPI values align with the related chart context for the current filtered view.,Retested in the headed suite at a structural level: the KPI cards and chart contexts loaded together without mismatched shell state.,Data Validation,Passed
+TP-CHOV-055,Persist filters while navigating within page,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Apply filters.
+6. Navigate between supported Channel Overview subviews.
+7. Return to the portfolio view.",Applied filters remain active while navigating within the Channel Overview page.,Retested in the headed suite: the applied filters persisted during the supported in-page navigation flows.,Data Validation,Passed
+TP-CHOV-060,Support multi-region selection flow,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Apply multiple Region selections.
+6. Review the resulting chip state and portfolio behavior.",Multiple Region selections are reflected in the current filter state and the page remains usable.,Retested in the headed suite: the current Region selection flow worked with the implemented filter behavior.,Functional,Passed
+TP-CHOV-061,Show overinvestment risk alert,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend intelligence workspace.
+6. Look for a visible Risk Alert Panel or explicit overinvestment risk alert.",An overinvestment risk alert is visible in the intelligence workspace.,Retested in the headed story-gap suite: the live intelligence workspace still does not render the documented Risk Alert Panel or an explicit overinvestment risk alert.,Functional,Failed
+TP-CHOV-062,Drill into Seasonal Performance view,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a channel detail page.
+6. Look for the Seasonal Performance drill path.",A Seasonal Performance drill path is available from the current channel detail experience.,Retested in the focused Channel Detail story-gap suite: the documented Seasonal Performance layer is not rendered on the live channel detail page.,Functional,Failed
+TP-CHOV-063,Show margin destruction risk alert,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Total Spend intelligence workspace.
+6. Look for a visible Risk Alert Panel or explicit margin destruction risk alert.",A margin destruction risk alert is visible in the intelligence workspace.,Retested in the headed story-gap suite: the live intelligence workspace still does not render the documented Risk Alert Panel or an explicit margin destruction risk alert.,Functional,Failed
+TP-CHOV-064,Keep filters applied when switching tabs,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Apply filters.
+6. Switch between the supported tabs or views.
+7. Confirm the filter state is preserved.",Filter state remains applied while switching between the supported tabs or views.,Retested in the headed suite: the filter state persisted while switching between the supported views.,Functional,Passed
+TP-CHOV-065,Return from channel detail to overview,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a channel detail page.
+6. Navigate back to the portfolio or overview shell.",The user can return from channel detail to the overview without losing the Channel Overview shell.,Retested in the headed suite: navigation returned from channel detail to the overview shell successfully.,Functional,Passed
+TP-CHOV-066,Display Elasticity Index metric on channel detail,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a channel detail page.
+6. Review the KPI snapshot section.",The channel detail KPI snapshot displays the documented Elasticity Index metric.,Retested in the focused Channel Detail story-gap suite: the live channel detail KPI snapshot does not render the documented Elasticity Index metric.,Functional,Failed
+TP-CHOV-067,Display AI Recommendations panel on channel detail,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a channel detail page.
+6. Review the lower detail sections for AI Recommendations.",The channel detail page displays the documented AI Recommendations panel.,Retested in the focused Channel Detail story-gap suite: the live channel detail page does not render the documented AI Recommendations panel.,Functional,Failed
+TP-POV-010,Expose custom date range selector on Promo Overview,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Expand the filter bar.
+6. Review the time filter controls for a custom date range selector.",The Promo Overview filter bar exposes the documented custom date range selector.,Retested in the focused Promo Overview story-gap suite: the live Promo Overview filter bar does not render a custom date range selector.,Common Filter Bar,Failed
+TP-POV-011,Expose Yearly time aggregation on Promo Overview,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Review the time aggregation controls in the filter bar.
+6. Look for a Yearly option alongside the other aggregation controls.",The Promo Overview filter bar exposes the documented Yearly time aggregation option.,Retested in the focused Promo Overview story-gap suite: the live Promo Overview filter bar does not render a Yearly time aggregation option.,Common Filter Bar,Failed
+TP-POV-020,Expose View all insights control for regular KPI intelligence,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select a regular KPI such as Total Promo Spend.
+6. Review the Intelligence tab header and controls.",The regular KPI intelligence panel exposes the documented View all insights control.,"Retested in the focused Promo Overview story-gap suite: after selecting Total Promo Spend, the live Promo Overview intelligence panel did not render a View all insights control.",Intelligence Tab,Failed
+TP-POV-021,Display Promo Count by Brand chart for Total Active Promos,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Active Promos KPI.
+6. Review the Intelligence tab for the Promo Count by Brand chart.",The Total Active Promos intelligence panel displays the documented Promo Count by Brand chart.,Retested in the focused Promo Overview story-gap suite: the live Total Active Promos intelligence panel did not render the documented Promo Count by Brand chart.,Intelligence Tab,Failed
+TP-POV-022,Display Promo Distribution by Channel chart for Total Active Promos,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Active Promos KPI.
+6. Review the Intelligence tab for the Promo Distribution by Channel chart.",The Total Active Promos intelligence panel displays the documented Promo Distribution by Channel chart.,Retested in the focused Promo Overview story-gap suite: the live Total Active Promos intelligence panel did not render the documented Promo Distribution by Channel chart.,Intelligence Tab,Failed
+TP-POV-023,Display Weekly Promo Density Heatmap for Total Active Promos,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Active Promos KPI.
+6. Review the Intelligence tab for the Weekly Promo Density Heatmap.",The Total Active Promos intelligence panel displays the documented Weekly Promo Density Heatmap.,Retested in the focused Promo Overview story-gap suite: the live Total Active Promos intelligence panel did not render the documented Weekly Promo Density Heatmap.,Intelligence Tab,Failed
+TP-POV-024,Display Spend by Promo chart for Total Promo Spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Promo Spend KPI.
+6. Review the Intelligence tab for the Spend by Promo chart.",The Total Promo Spend intelligence panel displays the documented Spend by Promo chart.,Retested in the focused Promo Overview story-gap suite: the live Total Promo Spend intelligence panel did not render the documented Spend by Promo chart.,Intelligence Tab,Failed
+TP-POV-025,Display Spend Trend chart for Total Promo Spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Promo Spend KPI.
+6. Review the Intelligence tab for the Spend Trend chart.",The Total Promo Spend intelligence panel displays the documented Spend Trend chart.,Retested in the focused Promo Overview story-gap suite: the live Total Promo Spend intelligence panel did not render the documented Spend Trend chart.,Intelligence Tab,Failed
+TP-POV-026,Display Spend by Channel chart for Total Promo Spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Promo Spend KPI.
+6. Review the Intelligence tab for the Spend by Channel chart.",The Total Promo Spend intelligence panel displays the documented Spend by Channel chart.,Retested in the focused Promo Overview story-gap suite: the live Total Promo Spend intelligence panel did not render the documented Spend by Channel chart.,Intelligence Tab,Failed
+TP-POV-030,Display ROI vs Spend chart for Average Promo ROI,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Average Promo ROI KPI.
+6. Review the Intelligence tab for the ROI vs Spend chart.",The Average Promo ROI intelligence panel displays the documented ROI vs Spend chart.,Retested in the focused Promo Overview story-gap suite: the live Average Promo ROI intelligence panel did not render the documented ROI vs Spend chart.,Intelligence Tab,Failed
+TP-POV-031,Display ROI Distribution chart for Average Promo ROI,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Average Promo ROI KPI.
+6. Review the Intelligence tab for the ROI Distribution chart.",The Average Promo ROI intelligence panel displays the documented ROI Distribution chart.,Retested in the focused Promo Overview story-gap suite: the live Average Promo ROI intelligence panel did not render the documented ROI Distribution chart.,Intelligence Tab,Failed
+TP-POV-032,Display ROI Trend Over Time chart for Average Promo ROI,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Average Promo ROI KPI.
+6. Review the Intelligence tab for the ROI Trend Over Time chart.",The Average Promo ROI intelligence panel displays the documented ROI Trend Over Time chart.,Retested in the focused Promo Overview story-gap suite: the live Average Promo ROI intelligence panel did not render the documented ROI Trend Over Time chart.,Intelligence Tab,Failed
+TP-CHOV-001,Verify Back to KPI view button is visible,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open a KPI intelligence view.
+6. Look for the Back to KPI view button.",Back to KPI view button should be visible.,Back to KPI view button is currently not visible.,UI,Open
+TP-CHOV-002,Verify dark mode icons are shown,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the icon treatments across the page in dark mode.",Dark mode icons should be shown correctly.,Some icons are still not shown correctly in dark mode.,UI,Open
+TP-CHOV-003,Verify Total Spend icon is greyed out when inactive,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the Total Spend KPI icon in its inactive state.",Total Spend icon should be greyed out when not selected.,Total Spend icon is not greyed out when inactive.,UI,Open
+TP-CHOV-004,Verify the correct toggle button is shown,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the toggle control shown in the current module.",The correct toggle button should be shown as per the user story.,The toggle button does not match the expected user story behavior.,UI,Open
+TP-CHOV-005,Verify cleared filters remain cleared after changing time aggregation,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Apply filters and clear them.
+6. Change the time aggregation.
+7. Review the resulting filter state.",Filters should remain cleared after changing time aggregation.,Cleared filters are not retained consistently after changing time aggregation.,Functional,Open
+TP-CHOV-006,Verify chart titles match their KPI metrics,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the KPI intelligence views.
+6. Review the chart titles against the KPI context.",Chart titles should correctly match the corresponding KPI metric.,Chart titles do not always match the corresponding KPI context.,UI,Open
+TP-CHOV-007,Verify y-axis label for Spend by Channel chart,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Spend by Channel chart.
+6. Review the y-axis label.",Y-axis label should be visible for the Spend by Channel chart.,Y-axis label is missing or incorrect on the Spend by Channel chart.,UI,Open
+TP-CHOV-008,Verify y-axis label for Incremental Revenue by Channel chart,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Incremental Revenue by Channel chart.
+6. Review the y-axis label.",Y-axis label should be visible for the Incremental Revenue by Channel chart.,Y-axis label is missing or incorrect on the Incremental Revenue by Channel chart.,UI,Open
+TP-CHOV-009,Verify Spend vs Revenue Contribution chart is displayed,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the related KPI intelligence workspace.
+6. Look for the Spend vs Revenue Contribution chart.",Spend vs Revenue Contribution chart should be displayed.,Spend vs Revenue Contribution chart is currently not displayed.,Functional,Open
+TP-CHOV-010,Verify long table column headers remain readable,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Switch to Table view.
+6. Review the long column headers.",Long column headers should be fully visible or wrapped clearly.,Some long column headers are truncated or hard to read.,UI,Open
+TP-CHOV-011,Verify only required actions are shown,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Review the action controls shown in the current workspace.",Only the required actions should be visible.,Unexpected or unnecessary actions are currently shown.,Functional,Open
+TP-CHOV-012,Verify legend labels in Elasticity and Discount Diagnostics chart,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Elasticity and Discount Diagnostics chart.
+6. Review the legend labels.",Legend labels should be visible and accurate.,Legend labels are missing or unclear in the Elasticity and Discount Diagnostics chart.,UI,Open
+TP-CHOV-013,Verify ROI by Discount Bucket label in Elasticity Diagnostic module,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Elasticity Diagnostic module.
+6. Review the ROI by Discount Bucket label.",ROI by Discount Bucket label should be shown correctly.,ROI by Discount Bucket label is missing or incorrect in the Elasticity Diagnostic module.,UI,Open
+TP-CHOV-021,Verify Channel ROI Over Time chart remains readable,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Channel Overview.
+5. Open the Channel ROI Over Time chart.
+6. Review readability of labels and plotted data.",Channel ROI Over Time chart should remain readable.,Channel ROI Over Time chart is difficult to read in the current view.,UI,Open

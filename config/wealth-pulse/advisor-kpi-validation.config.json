@@ -1,0 +1,122 @@
+{
+  "appUrl": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/advisor-portal/dashboard",
+  "startDate": "2026-08-03",
+  "endDate": "2026-08-09",
+  "workspaceId": "7405617719355782",
+  "tolerancePercent": 0.5,
+  "dashboards": [
+    {
+      "name": "Advisor Home",
+      "sidebarLinkText": "Dashboard",
+      "url": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/advisor-portal/dashboard",
+      "kpis": [
+        {
+          "name": "Total AUM",
+          "uiLabel": "TOTAL AUM",
+          "dbQuery": "SELECT SUM(p.amount) AS total_aum\nFROM wealth_pulse.gold.positions p\nJOIN wealth_pulse.gold.financial_account a\n    ON p.financial_account_id = a.financial_account_id\nWHERE p.snapshot_date = (\n    SELECT MAX(snapshot_date)\n    FROM wealth_pulse.gold.positions\n)\n  AND a.account_status_indicator = 'O'\n  AND a.is_active = 1",
+          "tolerancePercent": 1,
+          "resultField": "total_aum",
+          "valueFormat": "currency",
+          "signed": false
+        },
+        {
+          "name": "Net New Assets (QTD)",
+          "uiLabel": "NET NEW ASSETS (QTD)",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT\n        MAX(snapshot_date) AS end_date\n    FROM wealth_pulse.gold.positions\n),\ndate_filter AS (\n    SELECT\n        end_date,\n        DATE_TRUNC('quarter', end_date) AS start_date\n    FROM latest_snapshot\n)\nSELECT\n    ROUND(\n        SUM(\n            CASE\n                WHEN t.transaction_code IN ('CONTRIBUTION', 'TRANSFER_IN', 'RFF', 'CSR')\n                THEN ABS(t.amount)\n                ELSE 0\n            END\n        )\n        -\n        SUM(\n            CASE\n                WHEN t.transaction_code IN ('DISTRIBUTION', 'TRANSFER_OUT', 'SFF', 'PCC')\n                THEN ABS(t.amount)\n                ELSE 0\n            END\n        ),\n        2\n    ) AS net_new_assets\nFROM wealth_pulse.gold.transactions t\nJOIN wealth_pulse.gold.financial_account fa\n    ON t.financial_account_id = fa.financial_account_id\nWHERE CAST(t.transaction_date AS DATE)\n      BETWEEN (SELECT start_date FROM date_filter)\n          AND (SELECT end_date FROM date_filter)\n  AND fa.account_status_indicator = 'O'\n  AND fa.is_active = 1;",
+          "tolerancePercent": 1,
+          "resultField": "net_new_assets",
+          "valueFormat": "currency",
+          "signed": false
+        },
+        {
+          "name": "Idle Cash",
+          "uiLabel": "IDLE CASH",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT MAX(snapshot_date) AS max_snapshot_date\n    FROM wealth_pulse.gold.positions\n),\nposition_mv AS (\n    SELECT\n        p.financial_account_id,\n        SUM(p.amount) AS market_value\n    FROM wealth_pulse.gold.positions p\n    JOIN wealth_pulse.gold.financial_account a\n        ON p.financial_account_id = a.financial_account_id\n    CROSS JOIN latest_snapshot l\n    WHERE p.snapshot_date = l.max_snapshot_date\n      AND a.account_status_indicator = 'O'\n      AND a.is_active = 1\n    GROUP BY\n        p.financial_account_id\n),\naccount_cash AS (\n    SELECT\n        hd.house_hold_name,\n        a.financial_account_id,\n        mv.market_value,\n        a.cash_available,\n        a.cash_available / NULLIF(mv.market_value,0) AS cash_pct\n    FROM wealth_pulse.gold.account_summary a\n    JOIN position_mv mv\n        ON a.financial_account_id = mv.financial_account_id\n    LEFT JOIN wealth_pulse.gold.household_details hd\n        ON a.financial_account_id = hd.financial_account_id\n    JOIN wealth_pulse.gold.financial_account fa\n        ON a.financial_account_id = fa.financial_account_id\n    WHERE fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n)\nSELECT\n ROUND(SUM(cash_available),2) AS idle_cash\nFROM account_cash\nWHERE cash_pct > 0.05",
+          "tolerancePercent": 1,
+          "resultField": "idle_cash",
+          "valueFormat": "currency",
+          "signed": false
+        },
+        {
+          "name": "Concentration Risk",
+          "uiLabel": "CONCENTRATION RISK",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT MAX(snapshot_date) AS snapshot_date\n    FROM wealth_pulse.gold.positions\n),\nholdings AS (\n    SELECT\n        UPPER(\n            COALESCE(\n                NULLIF(TRIM(s.ticker), ''),\n                NULLIF(TRIM(p.cusip), '')\n            )\n        ) AS position_key,\n        SUM(p.amount) AS market_value\n    FROM wealth_pulse.gold.positions p\n    JOIN wealth_pulse.gold.household_details hd\n        ON p.financial_account_id = hd.financial_account_id\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n    LEFT JOIN wealth_pulse.gold.securities s\n        ON p.cusip = s.cusip\n    WHERE p.snapshot_date = (\n            SELECT snapshot_date\n            FROM latest_snapshot\n        )\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n    GROUP BY\n        UPPER(\n            COALESCE(\n                NULLIF(TRIM(s.ticker), ''),\n                NULLIF(TRIM(p.cusip), '')\n            )\n        )\n)\nSELECT\n    ROUND(\n        MAX(market_value) * 100.0 /\n        NULLIF(SUM(market_value), 0),\n        2\n    ) AS max_concentration_pct\nFROM holdings;",
+          "tolerancePercent": 1,
+          "resultField": "max_concentration_pct",
+          "valueFormat": "count",
+          "signed": false
+        },
+        {
+          "name": "AUM Trend by Advisor",
+          "uiLabel": "AUM Trend Chart",
+          "dbQuery": null,
+          "tolerancePercent": 3,
+          "resultField": null,
+          "valueFormat": "table",
+          "specialHandler": "aumTrendTable",
+          "matchKeys": [
+            "advisorId",
+            "month"
+          ],
+          "compareFields": [
+            "aum"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Household Management",
+      "sidebarLinkText": "Households",
+      "url": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/advisor-portal/households",
+      "kpis": [
+        {
+          "name": "Household Listing Table",
+          "uiLabel": "Household Listing Table",
+          "dbQuery": null,
+          "tolerancePercent": 3,
+          "resultField": null,
+          "valueFormat": "table",
+          "specialHandler": "householdTable",
+          "matchKeys": [
+            "householdName"
+          ],
+          "compareFields": [
+            "aum",
+            "accounts"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Portfolio Analytics",
+      "sidebarLinkText": "Portfolio Analytics",
+      "url": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/advisor-portal/portfolio-analytics",
+      "kpis": [
+        {
+          "name": "Cash Drag (bps)",
+          "uiLabel": "Cash Drag",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT MAX(snapshot_date) AS snapshot_date\n    FROM wealth_pulse.gold.positions\n),\naccount_mv AS (\n    SELECT\n        p.financial_account_id,\n        SUM(p.amount) AS market_value\n    FROM wealth_pulse.gold.positions p\n    CROSS JOIN latest_snapshot l\n    WHERE p.snapshot_date = l.snapshot_date\n    GROUP BY p.financial_account_id\n),\nacct_cash AS (\n    SELECT\n        a.financial_account_id,\n        a.account_number,\n        a.cash_available,\n        mv.market_value,\n        a.cash_available / NULLIF(mv.market_value, 0) AS cash_pct\n    FROM wealth_pulse.gold.account_summary a\n    JOIN account_mv mv\n        ON a.financial_account_id = mv.financial_account_id\n    JOIN wealth_pulse.gold.financial_account fa\n        ON a.financial_account_id = fa.financial_account_id\n    WHERE fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n)\nSELECT\n    ROUND(\n        (AVG(cash_pct) - 0.03)\n        * (0.10 - 0.045)\n        * 10000,\n        2\n    ) AS cash_drag_bps\nFROM acct_cash\nWHERE cash_pct > 0.03",
+          "tolerancePercent": 1,
+          "resultField": "cash_drag_bps",
+          "valueFormat": "count",
+          "signed": false
+        },
+        {
+          "name": "Asset Allocation Breakdown",
+          "uiLabel": "Asset Allocation Breakdown",
+          "dbQuery": null,
+          "tolerancePercent": 3,
+          "resultField": null,
+          "valueFormat": "table",
+          "specialHandler": "assetAllocationTable",
+          "matchKeys": [
+            "assetClass"
+          ],
+          "compareFields": [
+            "currentPct"
+          ]
+        }
+      ]
+    }
+  ]
+}

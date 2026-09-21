@@ -1,0 +1,195 @@
+[
+  {
+    "id": "total_spend",
+    "label": "Total spend",
+    "format": "currency",
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_quantity, u.sku_name, u.cloud, u.usage_end_time,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank,\n         p.pricing.default AS unit_price\n  FROM system.billing.usage u\n  JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1"
+  },
+  {
+    "id": "overview_spend_30d",
+    "label": "Spend · last 30 days",
+    "format": "currency",
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_quantity,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank,\n         p.pricing.default AS unit_price\n  FROM system.billing.usage u\n  JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN DATE_SUB(CURRENT_DATE(), 29) AND CURRENT_DATE()\n)\nSELECT ROUND(COALESCE(SUM(usage_quantity * unit_price), 0), 2) AS value\nFROM priced_usage WHERE price_rank = 1"
+  },
+  {
+    "id": "overview_workspace_24h",
+    "label": "Workspace · 24h",
+    "format": "number",
+    "sql": "SELECT ROUND(COALESCE(SUM(usage_quantity), 0), 2) AS value\nFROM system.billing.usage\nWHERE workspace_id = '{{workspaceId}}'\n  AND usage_unit = 'DBU'\n  AND usage_end_time >= CURRENT_TIMESTAMP() - INTERVAL 24 HOURS\n  AND usage_end_time <= CURRENT_TIMESTAMP()"
+  },
+  {
+    "id": "overview_job_health",
+    "label": "Job health",
+    "format": "percent",
+    "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN result_state IN ('FAILED','TIMED_OUT','ERROR','INTERNAL_ERROR') THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 2) AS value\nFROM system.lakeflow.job_run_timeline\nWHERE workspace_id = '{{workspaceId}}'\n  AND period_end_time IS NOT NULL\n  AND DATE(period_start_time) BETWEEN DATE_SUB(CURRENT_DATE(), 29) AND CURRENT_DATE()"
+  },
+  {
+    "id": "total_dbu",
+    "label": "Total DBU",
+    "format": "number",
+    "sql": "SELECT ROUND(SUM(usage_quantity), 2) AS value\nFROM system.billing.usage\nWHERE workspace_id = '{{workspaceId}}'\n  AND usage_unit = 'DBU'\n  AND usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "spend_by_compute_type",
+    "label": "Spend by compute type",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "billing_origin_product"
+      ],
+      "compareFields": [
+        "value"
+      ]
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.billing_origin_product, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT billing_origin_product, ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1\nGROUP BY billing_origin_product ORDER BY value DESC"
+  },
+  {
+    "id": "total_job_runs",
+    "label": "Total job runs",
+    "format": "number",
+    "sql": "SELECT COUNT(*) AS value\nFROM system.lakeflow.job_run_timeline\nWHERE workspace_id = '{{workspaceId}}' AND period_end_time IS NOT NULL\n  AND DATE(period_start_time) BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "job_failure_rate",
+    "label": "Failure rate",
+    "format": "percent",
+    "sql": "SELECT ROUND(100.0 * SUM(CASE WHEN result_state IN ('FAILED','TIMED_OUT','ERROR','INTERNAL_ERROR') THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 2) AS value\nFROM system.lakeflow.job_run_timeline\nWHERE workspace_id = '{{workspaceId}}' AND period_end_time IS NOT NULL\n  AND DATE(period_start_time) BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "total_runtime",
+    "label": "Total runtime",
+    "format": "number",
+    "sql": "SELECT ROUND(SUM(UNIX_TIMESTAMP(period_end_time) - UNIX_TIMESTAMP(period_start_time)) / 3600.0, 2) AS value\nFROM system.lakeflow.job_run_timeline\nWHERE workspace_id = '{{workspaceId}}' AND period_end_time IS NOT NULL\n  AND DATE(period_start_time) BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "active_jobs",
+    "label": "Active jobs",
+    "format": "number",
+    "sql": "SELECT COUNT(DISTINCT job_id) AS value\nFROM system.lakeflow.job_run_timeline\nWHERE workspace_id = '{{workspaceId}}' AND period_end_time IS NOT NULL\n  AND DATE(period_start_time) BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "sql_dashboard_metrics",
+    "label": "SQL dashboard metrics",
+    "format": "table",
+    "sql": "SELECT COUNT(*) AS total_queries, ROUND(100.0 * SUM(CASE WHEN total_duration_ms > 30000 THEN 1 ELSE 0 END) / NULLIF(COUNT(*), 0), 2) AS slow_pct, ROUND(SUM(total_duration_ms) / 3600000.0, 2) AS query_hours, COUNT(DISTINCT executed_by) AS distinct_users\nFROM system.query.history\nWHERE workspace_id = '{{workspaceId}}' AND DATE(start_time) BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "lineage_edges",
+    "label": "Lineage edges",
+    "format": "number",
+    "sql": "SELECT COUNT(DISTINCT CONCAT_WS('|', source_table_full_name, target_table_full_name)) AS value\nFROM system.access.table_lineage\nWHERE workspace_id = '{{workspaceId}}'"
+  },
+  {
+    "id": "audit_events",
+    "label": "Audit events",
+    "format": "table",
+    "sql": "SELECT COUNT(*) AS events, COUNT(DISTINCT user_identity.email) AS users\nFROM system.access.audit\nWHERE workspace_id = '{{workspaceId}}' AND DATE(event_time) BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "notebook_dbu_cost_basis",
+    "label": "Notebook DBU cost basis",
+    "format": "number",
+    "sql": "SELECT ROUND(SUM(usage_quantity), 2) AS value\nFROM system.billing.usage\nWHERE workspace_id = '{{workspaceId}}' AND usage_unit = 'DBU'\n  AND usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'"
+  },
+  {
+    "id": "spend_over_time",
+    "label": "Spend over time",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "usage_date"
+      ],
+      "compareFields": [
+        "value"
+      ]
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_date, u.workspace_id, u.billing_origin_product, u.custom_tags,\n         u.identity_metadata, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT CAST(usage_date AS STRING) AS usage_date, ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1\nGROUP BY usage_date ORDER BY usage_date"
+  },
+  {
+    "id": "dbu_over_time",
+    "label": "DBU consumption over time",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "usage_date"
+      ],
+      "compareFields": [
+        "value"
+      ]
+    },
+    "sql": "SELECT CAST(usage_date AS STRING) AS usage_date, ROUND(SUM(usage_quantity), 2) AS value\nFROM system.billing.usage\nWHERE workspace_id = '{{workspaceId}}' AND usage_unit = 'DBU'\n  AND usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\nGROUP BY usage_date ORDER BY usage_date"
+  },
+  {
+    "id": "daily_spend_by_compute_type",
+    "label": "Daily spend by compute type",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "usage_date",
+        "billing_origin_product"
+      ],
+      "compareFields": [
+        "value"
+      ],
+      "paginated": true
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_date, u.workspace_id, u.billing_origin_product, u.custom_tags,\n         u.identity_metadata, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT CAST(usage_date AS STRING) AS usage_date, billing_origin_product,\n       ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1\nGROUP BY usage_date, billing_origin_product\nORDER BY usage_date, billing_origin_product"
+  },
+  {
+    "id": "spend_by_team",
+    "label": "Spend by team",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "team"
+      ],
+      "compareFields": [
+        "value"
+      ]
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_date, u.workspace_id, u.billing_origin_product, u.custom_tags,\n         u.identity_metadata, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT COALESCE(custom_tags['Team'], custom_tags['team']) AS team,\n       ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1\n  AND COALESCE(custom_tags['Team'], custom_tags['team']) IS NOT NULL\nGROUP BY team ORDER BY value DESC LIMIT 10"
+  },
+  {
+    "id": "spend_by_environment",
+    "label": "Spend by environment",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "environment"
+      ],
+      "compareFields": [
+        "value"
+      ]
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_date, u.workspace_id, u.billing_origin_product, u.custom_tags,\n         u.identity_metadata, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT LOWER(COALESCE(custom_tags['Environment'], custom_tags['environment'], custom_tags['env'], 'untagged')) AS environment,\n       ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1\nGROUP BY environment ORDER BY value DESC"
+  },
+  {
+    "id": "top_spenders",
+    "label": "Top spenders",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "run_as"
+      ],
+      "compareFields": [
+        "value"
+      ],
+      "keyPrefixMatch": true
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_date, u.workspace_id, u.billing_origin_product, u.custom_tags,\n         u.identity_metadata, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT identity_metadata.run_as AS run_as,\n       ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1 AND identity_metadata.run_as IS NOT NULL\nGROUP BY run_as ORDER BY value DESC LIMIT 10"
+  },
+  {
+    "id": "spend_by_workspace",
+    "label": "Share of spend by workspace",
+    "format": "table",
+    "rowComparison": {
+      "matchKeys": [
+        "workspace_id"
+      ],
+      "compareFields": [
+        "value"
+      ]
+    },
+    "sql": "WITH priced_usage AS (\n  SELECT u.usage_date, u.workspace_id, u.billing_origin_product, u.custom_tags,\n         u.identity_metadata, u.usage_quantity, p.pricing.default AS unit_price,\n         ROW_NUMBER() OVER (PARTITION BY u.record_id ORDER BY p.price_start_time DESC) AS price_rank\n  FROM system.billing.usage u JOIN system.billing.list_prices p\n    ON u.sku_name = p.sku_name AND u.cloud = p.cloud\n   AND u.usage_end_time >= p.price_start_time\n   AND (p.price_end_time IS NULL OR u.usage_end_time < p.price_end_time)\n  WHERE u.workspace_id = '{{workspaceId}}'\n    AND u.usage_date BETWEEN '{{startDate}}' AND '{{endDate}}'\n)\nSELECT CAST(workspace_id AS STRING) AS workspace_id, ROUND(SUM(usage_quantity * unit_price), 2) AS value\nFROM priced_usage WHERE price_rank = 1\nGROUP BY workspace_id ORDER BY value DESC"
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "title": "Data Validation Master Report",
+  "outputPath": "artifacts/reports/html/master-data-validation-report.html",
+  "projects": [
+    {
+      "id": "governance",
+      "name": "Governance",
+      "reportPath": "artifacts/reports/html/governance-kpi-validation-report.html"
+    },
+    {
+      "id": "wealth-pulse",
+      "name": "Wealth Pulse",
+      "reportPath": "artifacts/reports/html/wealth-pulse-combined-kpi-comparison-report.html"
+    }
+  ]
+}

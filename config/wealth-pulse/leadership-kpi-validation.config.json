@@ -1,0 +1,156 @@
+{
+  "appUrl": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/leadership-portal/advisor-intelligence",
+  "startDate": "2026-08-03",
+  "endDate": "2026-08-09",
+  "workspaceId": "7405617719355782",
+  "databricksHost": "adb-7405617719355782.2.azuredatabricks.net",
+  "databricksToken": "",
+  "warehouseId": "7405617719355782",
+  "httpPath": "",
+  "tolerancePercent": 0.5,
+  "dashboards": [
+    {
+      "name": "Firm Dashboard",
+      "sidebarLinkText": "Firm Dashboard",
+      "url": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/leadership-portal/firm-dashboard",
+      "kpis": [
+        {
+          "name": "Firm AUM",
+          "uiLabel": "Firm AUM",
+          "dbQuery": "SELECT SUM(p.amount) AS total_aum\nFROM wealth_pulse.gold.positions p\nJOIN wealth_pulse.gold.financial_account a\n    ON p.financial_account_id = a.financial_account_id\nWHERE p.snapshot_date = (\n    SELECT MAX(snapshot_date)\n    FROM wealth_pulse.gold.positions\n)\n  AND a.account_status_indicator = 'O'\n  AND a.is_active = 1",
+          "tolerancePercent": 1,
+          "resultField": null,
+          "valueFormat": "currency",
+          "signed": false
+        },
+        {
+          "name": "Organic Growth Rate",
+          "uiLabel": "Organic Growth Rate",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT\n        MAX(snapshot_date) AS end_date\n    FROM wealth_pulse.gold.positions\n),\n\nbeginning_snapshot AS (\n\n    SELECT\n        MAX(snapshot_date) AS start_date\n    FROM wealth_pulse.gold.positions\n    WHERE snapshot_date < (\n        SELECT DATE_TRUNC('year', end_date)\n        FROM latest_snapshot\n    )\n\n),\n\nbeginning_aum AS (\n\n    SELECT\n        SUM(p.amount) AS beginning_aum\n\n    FROM wealth_pulse.gold.positions p\n\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n\n    WHERE p.snapshot_date = (\n            SELECT snapshot_date\n            FROM beginning_snapshot\n          )\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n),\n\nnet_new_assets AS (\n\n    SELECT\n\n        SUM(\n            CASE\n                WHEN t.transaction_code IN\n                    ('CONTRIBUTION','TRANSFER_IN','RFF','CSR')\n                THEN ABS(t.amount)\n                ELSE 0\n            END\n        )\n        -\n        SUM(\n            CASE\n                WHEN t.transaction_code IN\n                    ('DISTRIBUTION','TRANSFER_OUT','SFF','PCC')\n                THEN ABS(t.amount)\n                ELSE 0\n            END\n        ) AS nna\n\n    FROM wealth_pulse.gold.transactions t\n\n    JOIN wealth_pulse.gold.financial_account fa\n        ON t.financial_account_id = fa.financial_account_id\n\n    CROSS JOIN latest_snapshot ls\n    CROSS JOIN beginning_snapshot bs\n\n    WHERE CAST(t.transaction_date AS DATE)\n          BETWEEN bs.start_date\n              AND ls.end_date\n\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n)\n\nSELECT\n\n    ROUND(nna.nna,2) AS net_new_assets,\n\n    ROUND(ba.beginning_aum,2) AS beginning_aum,\n\n    ROUND(\n        (\n            nna.nna /\n            NULLIF(ba.beginning_aum,0)\n        )\n        *\n        (12.0 / MONTH(ls.end_date))\n        * 100,\n        2\n    ) AS organic_growth_rate\n\nFROM net_new_assets nna\n\nCROSS JOIN beginning_aum ba\nCROSS JOIN latest_snapshot ls;",
+          "tolerancePercent": 1,
+          "resultField": "organic_growth_rate",
+          "valueFormat": "percent",
+          "signed": false
+        },
+        {
+          "name": "Est. Annual Revenue",
+          "uiLabel": "Est. Annual Revenue",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT\n        MAX(snapshot_date) AS latest_date\n    FROM wealth_pulse.gold.positions\n\n),\ncurrent_year_revenue AS (\n    SELECT\n        SUM(fc.gross_comm) AS ytd_revenue,\n        MONTH(MAX(fc.broker_month)) AS completed_months\n    FROM wealth_pulse.gold.fa_commission fc\n    JOIN wealth_pulse.gold.financial_account fa\n        ON fc.financial_account_id = fa.financial_account_id\n    CROSS JOIN latest_snapshot lm\n    WHERE fc.broker_month BETWEEN\n          DATE_TRUNC('year', lm.latest_date)\n          AND lm.latest_date\n      AND fa.account_status_indicator='O'\n      AND fa.is_active=1\n),\n\nprevious_year_revenue AS (\n    SELECT\n        SUM(fc.gross_comm) AS ytd_revenue\n    FROM wealth_pulse.gold.fa_commission fc\n    JOIN wealth_pulse.gold.financial_account fa\n        ON fc.financial_account_id = fa.financial_account_id\n    CROSS JOIN current_year_revenue c\n    CROSS JOIN latest_snapshot lm\n    WHERE fc.broker_month BETWEEN\n        ADD_MONTHS(\n            DATE_TRUNC('year', lm.latest_date),\n            -12\n        )\n        AND\n        ADD_MONTHS(\n            ADD_MONTHS(\n                DATE_TRUNC('year', lm.latest_date),\n                -12\n            ),\n            c.completed_months\n        ) - 1\n      AND fa.account_status_indicator='O'\n      AND fa.is_active=1\n\n)\nSELECT\n\n    ROUND(\n        c.ytd_revenue * 12 / c.completed_months,\n        2\n    ) AS estimated_annual_revenue,\n\n    ROUND(\n        p.ytd_revenue * 12 / c.completed_months,\n        2\n    ) AS previous_estimated_revenue,\n\n    ROUND(\n        (\n            (c.ytd_revenue * 12 / c.completed_months) - (p.ytd_revenue * 12 / c.completed_months)\n        )/\n        NULLIF((p.ytd_revenue * 12 / c.completed_months),0) * 100, 2\n    ) AS yoy_growth_pct\n\nFROM current_year_revenue c\n\nCROSS JOIN previous_year_revenue p;",
+          "tolerancePercent": 1,
+          "resultField": "estimated_annual_revenue",
+          "valueFormat": "currency",
+          "signed": false
+        },
+        {
+          "name": "Client Retention",
+          "uiLabel": "Client Retention",
+          "dbQuery": "WITH latest_snapshot AS (\n\n    SELECT\n        MAX(snapshot_date) AS end_date\n    FROM wealth_pulse.gold.positions\n\n),\n\nbeginning_snapshot AS (\n\n    SELECT\n        MAX(snapshot_date) AS start_date\n    FROM wealth_pulse.gold.positions\n    WHERE snapshot_date < (\n        SELECT DATE_TRUNC('quarter', end_date)\n        FROM latest_snapshot\n    )\n\n),\n\nbeginning_aum AS (\n\n    SELECT\n\n        SUM(p.amount) AS beginning_aum\n\n    FROM wealth_pulse.gold.positions p\n\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n\n    CROSS JOIN beginning_snapshot bs\n\n    WHERE p.snapshot_date = bs.start_date\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n),\n\noutflows AS (\n\n    SELECT\n\n        SUM(ABS(t.amount)) AS outflow_amount\n\n    FROM wealth_pulse.gold.transactions t\n\n    JOIN wealth_pulse.gold.financial_account fa\n        ON t.financial_account_id = fa.financial_account_id\n\n    CROSS JOIN latest_snapshot ls\n    CROSS JOIN beginning_snapshot bs\n\n    WHERE CAST(t.transaction_date AS DATE)\n          BETWEEN bs.start_date\n              AND ls.end_date\n\n      AND t.transaction_code IN\n            (\n                'DISTRIBUTION',\n                'TRANSFER_OUT',\n                'SFF',\n                'PCC'\n            )\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n)\n\nSELECT\n\n    ROUND(ba.beginning_aum,2) AS beginning_aum,\n\n    ROUND(COALESCE(o.outflow_amount,0),2) AS outflows,\n\n    ROUND(\n\n        (\n            ba.beginning_aum\n            -\n            COALESCE(o.outflow_amount,0)\n        )\n        /\n        NULLIF(ba.beginning_aum,0)\n        * 100,\n\n        2\n\n    ) AS client_retention_rate\n\nFROM beginning_aum ba\n\nCROSS JOIN outflows o;",
+          "tolerancePercent": 1,
+          "resultField": "client_retention_rate",
+          "valueFormat": "percent",
+          "signed": false
+        }
+      ]
+    },
+    {
+      "name": "Household Insights",
+      "sidebarLinkText": "Household Insights",
+      "url": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/leadership-portal/household-insights",
+      "kpis": [
+        {
+          "name": "Households",
+          "uiLabel": "Households",
+          "dbQuery": "SELECT COUNT(DISTINCT hd.house_hold_name) AS household_count\nFROM wealth_pulse.gold.household_details hd\nJOIN wealth_pulse.gold.financial_account fa\n    ON hd.financial_account_id = fa.financial_account_id\nWHERE fa.account_status_indicator = 'O'\n  AND fa.is_active = 1",
+          "tolerancePercent": 1,
+          "resultField": "household_count",
+          "valueFormat": "count",
+          "signed": false
+        },
+        {
+          "name": "High Risk Households",
+          "uiLabel": "High Risk Households",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT MAX(snapshot_date) AS max_snapshot_date\n    FROM wealth_pulse.gold.positions\n),\naccount_base AS (\n    SELECT\n        ac.financial_account_id,\n        ac.account_number,\n        h.house_hold_name,\n        (COALESCE(ac.trade_date_net_worth, 0) + COALESCE(ac.cash_available, 0)) AS account_aum,\n        CASE\n            WHEN (COALESCE(ac.trade_date_net_worth, 0) + COALESCE(ac.cash_available, 0)) = 0 THEN 0\n            ELSE ac.cash_available * 100.0 / (COALESCE(ac.trade_date_net_worth, 0) + COALESCE(ac.cash_available, 0))\n        END AS cash_pct\n    FROM wealth_pulse.gold.account_summary ac\n    JOIN wealth_pulse.gold.household_details h\n        ON ac.financial_account_id = h.financial_account_id\n),\naccount_concentration AS (\n    SELECT\n        p.financial_account_id,\n        MAX(ABS(p.amount) * 100.0 / NULLIF(ab.account_aum, 0)) AS concentration_pct\n    FROM wealth_pulse.gold.positions p\n    JOIN account_base ab\n        ON p.financial_account_id = ab.financial_account_id\n    CROSS JOIN latest_snapshot l\n    WHERE p.snapshot_date = l.max_snapshot_date\n    GROUP BY p.financial_account_id\n),\naccount_drift AS (\n    SELECT\n        ab.financial_account_id,\n        ABS(\n            (ac.total_equity * 100.0 / NULLIF((COALESCE(ac.trade_date_net_worth, 0) + COALESCE(ac.cash_available, 0)), 0))\n            - dmp.target_equity_pct\n        ) AS drift_pct\n    FROM account_base ab\n    JOIN wealth_pulse.gold.account_summary ac\n        ON ab.financial_account_id = ac.financial_account_id\n    JOIN wealth_pulse_insigneo_model.silver.account_model_mapping amm\n        ON ab.account_number = amm.account_number\n    JOIN wealth_pulse.gold.dim_model_portfolio dmp\n        ON amm.model_id = dmp.model_id\n),\nhousehold_risk AS (\n    SELECT\n        ab.house_hold_name,\n        MAX(COALESCE(cc.concentration_pct, 0)) AS concentration_risk,\n        SUM(COALESCE(ad.drift_pct, 0) * ab.account_aum) / NULLIF(SUM(ab.account_aum), 0) AS drift_risk,\n        SUM(ab.cash_pct * ab.account_aum) / NULLIF(SUM(ab.account_aum), 0) AS cash_risk\n    FROM account_base ab\n    LEFT JOIN account_concentration cc\n        ON ab.financial_account_id = cc.financial_account_id\n    LEFT JOIN account_drift ad\n        ON ab.financial_account_id = ad.financial_account_id\n    GROUP BY ab.house_hold_name\n),\nhousehold_score AS (\n    SELECT\n        house_hold_name,\n        (\n            (CASE WHEN concentration_risk > 10 THEN 100 ELSE concentration_risk * 10 END)\n            + (CASE WHEN drift_risk > 8 THEN 100 ELSE drift_risk * 12.5 END)\n            + (CASE WHEN cash_risk > 10 THEN 100 ELSE cash_risk * 10 END)\n        ) / 3 AS risk_score\n    FROM household_risk\n)\nSELECT COUNT(*) AS high_risk_households\nFROM household_score\nWHERE risk_score >= 70",
+          "tolerancePercent": 1,
+          "resultField": "high_risk_households",
+          "valueFormat": "count",
+          "signed": false
+        },
+        {
+          "name": "Avg YTD Return",
+          "uiLabel": "Avg YTD Return",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT MAX(snapshot_date) AS max_snapshot_date\n    FROM wealth_pulse.gold.positions\n),\n\n/* Latest Household AUM */\nhousehold_aum AS (\n    SELECT\n        h.house_hold_name,\n        SUM(p.amount) AS aum\n    FROM wealth_pulse.gold.positions p\n    JOIN wealth_pulse.gold.household_details h\n        ON p.financial_account_id = h.financial_account_id\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n    CROSS JOIN latest_snapshot l\n    WHERE p.snapshot_date = l.max_snapshot_date\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n    GROUP BY\n        h.house_hold_name\n),\n\n/* Beginning Household AUM */\nbeginning_household_aum AS (\n    SELECT\n        h.house_hold_name,\n        SUM(p.amount) AS beginning_aum\n    FROM wealth_pulse.gold.positions p\n    JOIN wealth_pulse.gold.household_details h\n        ON p.financial_account_id = h.financial_account_id\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n    WHERE p.snapshot_date = (\n        SELECT MAX(snapshot_date)\n        FROM wealth_pulse.gold.positions\n        WHERE snapshot_date < DATE_TRUNC(\n            'year',\n            (SELECT max_snapshot_date FROM latest_snapshot)\n        )\n    )\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n    GROUP BY\n        h.house_hold_name\n),\n\n/* Household YTD Return */\nhousehold_ytd_return AS (\n    SELECT\n        ha.house_hold_name,\n        (\n            (ha.aum - COALESCE(b.beginning_aum,0))\n            / NULLIF(b.beginning_aum,0)\n        ) * 100 AS ytd_return\n    FROM household_aum ha\n    LEFT JOIN beginning_household_aum b\n        ON ha.house_hold_name = b.house_hold_name\n)\n\nSELECT\n    ROUND(AVG(ytd_return), 2) AS avg_household_ytd_return_pct\nFROM household_ytd_return\nWHERE ytd_return IS NOT NULL;",
+          "tolerancePercent": 1,
+          "resultField": "avg_household_ytd_return_pct",
+          "valueFormat": "percent",
+          "signed": true
+        }
+      ]
+    },
+    {
+      "name": "Advisor Intelligence",
+      "sidebarLinkText": "Advisor Intelligence",
+      "url": "https://dev.1platform.tech/430e8742-30db-4701-bb57-ab968dcfa35f/leadership-portal/advisor-intelligence",
+      "kpis": [
+        {
+          "name": "Top AUM Growth",
+          "uiLabel": "Top AUM Growth",
+          "dbQuery": "WITH snapshot_refs AS (\n\n    SELECT\n\n        (\n            SELECT MAX(snapshot_date)\n            FROM wealth_pulse.gold.positions\n        ) AS current_snapshot,\n\n        (\n            SELECT MIN(snapshot_date)\n            FROM wealth_pulse.gold.positions\n        ) AS prior_snapshot\n\n),\n\ncurrent_aum AS (\n\n    SELECT\n\n        fa.investment_professional_number,\n\n        SUM(p.amount) AS current_aum\n\n    FROM wealth_pulse.gold.positions p\n\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n\n    CROSS JOIN snapshot_refs s\n\n    WHERE p.snapshot_date = s.current_snapshot\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n    GROUP BY\n        fa.investment_professional_number\n\n),\n\nprior_aum AS (\n\n    SELECT\n\n        fa.investment_professional_number,\n\n        SUM(p.amount) AS prior_aum\n\n    FROM wealth_pulse.gold.positions p\n\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n\n    CROSS JOIN snapshot_refs s\n\n    WHERE p.snapshot_date = s.prior_snapshot\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n    GROUP BY\n        fa.investment_professional_number\n\n),\n\nadvisor_growth AS (\n\n    SELECT\n\n        c.investment_professional_number,\n\n        c.current_aum,\n\n        COALESCE(p.prior_aum,0) AS prior_aum,\n\n        ROUND(\n            (\n                (c.current_aum - p.prior_aum)\n                /\n                NULLIF(p.prior_aum,0)\n            ) * 100,\n            2\n        ) AS growth_pct\n\n    FROM current_aum c\n\n    LEFT JOIN prior_aum p\n        ON c.investment_professional_number = p.investment_professional_number\n\n)\n\nSELECT\n\n    fa.rep_id AS advisor_id,\n\n    fa.record_assigned_name AS advisor_name,\n\n    ROUND(ag.current_aum,2) AS current_aum,\n\n    ag.growth_pct\n\nFROM advisor_growth ag\n\nJOIN wealth_pulse.gold.financial_advisor fa\n    ON ag.investment_professional_number = fa.rep_id\n\nWHERE ag.growth_pct IS NOT NULL\n\nORDER BY\n    growth_pct DESC NULLS LAST,\n    current_aum DESC\n\nLIMIT 1;",
+          "tolerancePercent": 1,
+          "resultField": "growth_pct",
+          "valueFormat": "percent",
+          "signed": true
+        },
+        {
+          "name": "Most Net New Money",
+          "uiLabel": "Most Net New Money",
+          "dbQuery": "WITH latest_snapshot AS (\n\n    SELECT\n        MAX(snapshot_date) AS end_date\n    FROM wealth_pulse.gold.positions\n\n),\n\ndate_filter AS (\n\n    SELECT\n        end_date,\n        DATE_TRUNC('year', end_date) AS start_date\n    FROM latest_snapshot\n\n),\n\nadvisor_nnm AS (\n\n    SELECT\n        fa.investment_professional_number,\n\n        SUM(\n            CASE\n                WHEN t.transaction_code IN ('CONTRIBUTION','TRANSFER_IN','RFF','CSR')\n                THEN ABS(t.amount)\n                ELSE 0\n            END\n        )\n        -\n        SUM(\n            CASE\n                WHEN t.transaction_code IN ('DISTRIBUTION','TRANSFER_OUT','SFF','PCC')\n                THEN ABS(t.amount)\n                ELSE 0\n            END\n        ) AS net_new_money\n\n    FROM wealth_pulse.gold.transactions t\n\n    INNER JOIN wealth_pulse.gold.financial_account fa\n        ON t.financial_account_id = fa.financial_account_id\n\n    WHERE CAST(t.transaction_date AS DATE)\n          BETWEEN (SELECT start_date FROM date_filter)\n              AND (SELECT end_date FROM date_filter)\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n\n    GROUP BY fa.investment_professional_number\n\n),\n\nadvisor_aum AS (\n\n    SELECT\n        p.investment_professional_number,\n        SUM(p.amount) AS current_aum\n\n    FROM wealth_pulse.gold.positions p\n\n    WHERE p.snapshot_date = (\n        SELECT end_date\n        FROM latest_snapshot\n    )\n\n    GROUP BY p.investment_professional_number\n\n)\n\nSELECT\n\n    fa.rep_id as investment_professional_number,\n    fa.record_assigned_name as advisor_name,\n\n    ROUND(n.net_new_money,2) AS net_new_money,\n\n    ROUND(a.current_aum,2) AS current_aum,\n\n    ROUND(\n        CASE\n            WHEN a.current_aum > 0\n            THEN (n.net_new_money / a.current_aum) * 100\n            ELSE 0\n        END,\n        2\n    ) AS net_new_money_pct\n\nFROM advisor_nnm n\n\nJOIN advisor_aum a\n    ON n.investment_professional_number = a.investment_professional_number\n\nJOIN wealth_pulse.gold.financial_advisor fa\n    ON n.investment_professional_number = fa.rep_id\n\nORDER BY net_new_money_pct DESC, current_aum DESC\n\nLIMIT 1;",
+          "tolerancePercent": 1,
+          "resultField": "net_new_money",
+          "valueFormat": "currency",
+          "signed": false
+        },
+        {
+          "name": "Best Client Retention",
+          "uiLabel": "Best Client Retention",
+          "dbQuery": "WITH latest_snapshot AS (\n    SELECT MAX(snapshot_date) AS end_date\n    FROM wealth_pulse.gold.positions\n),\nbeginning_snapshot AS (\n    SELECT MAX(snapshot_date) AS start_date\n    FROM wealth_pulse.gold.positions\n    WHERE snapshot_date < (SELECT DATE_TRUNC('quarter', end_date) FROM latest_snapshot)\n),\nbeginning_aum AS (\n    SELECT fa.investment_professional_number, SUM(p.amount) AS beginning_aum\n    FROM wealth_pulse.gold.positions p\n    JOIN wealth_pulse.gold.financial_account fa\n        ON p.financial_account_id = fa.financial_account_id\n    CROSS JOIN beginning_snapshot bs\n    WHERE p.snapshot_date = bs.start_date\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n    GROUP BY fa.investment_professional_number\n),\noutflows AS (\n    SELECT fa.investment_professional_number, SUM(ABS(t.amount)) AS outflow_amount\n    FROM wealth_pulse.gold.transactions t\n    JOIN wealth_pulse.gold.financial_account fa\n        ON t.financial_account_id = fa.financial_account_id\n    CROSS JOIN latest_snapshot ls\n    CROSS JOIN beginning_snapshot bs\n    WHERE CAST(t.transaction_date AS DATE) BETWEEN bs.start_date AND ls.end_date\n      AND t.transaction_code IN ('DISTRIBUTION','TRANSFER_OUT','SFF','PCC')\n      AND fa.account_status_indicator = 'O'\n      AND fa.is_active = 1\n    GROUP BY fa.investment_professional_number\n)\nSELECT\n    ROUND(MAX(\n        (ba.beginning_aum - COALESCE(o.outflow_amount, 0)) / NULLIF(ba.beginning_aum, 0) * 100\n    ), 2) AS best_client_retention_rate\nFROM beginning_aum ba\nLEFT JOIN outflows o\n    ON ba.investment_professional_number = o.investment_professional_number",
+          "tolerancePercent": 1,
+          "resultField": "best_client_retention_rate",
+          "valueFormat": "percent",
+          "signed": false
+        },
+        {
+          "name": "AUM Trend by Advisor",
+          "uiLabel": "AUM Trend by Advisor",
+          "dbQuery": null,
+          "tolerancePercent": 3,
+          "resultField": null,
+          "valueFormat": "table",
+          "specialHandler": "aumTrendTable",
+          "matchKeys": [
+            "advisorId",
+            "month"
+          ],
+          "compareFields": [
+            "aum"
+          ]
+        },
+        {
+          "name": "Metric Comparison — Active Advisors",
+          "uiLabel": "Metric Comparison — Active Advisors",
+          "dbQuery": null,
+          "tolerancePercent": 5,
+          "resultField": null,
+          "valueFormat": "table",
+          "specialHandler": "top4AdvisorMetrics",
+          "matchKeys": [
+            "advisorId"
+          ],
+          "compareFields": [
+            "ytdGrowthPct",
+            "retentionPct"
+          ]
+        }
+      ]
+    }
+  ]
+}

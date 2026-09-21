@@ -1,0 +1,487 @@
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - button "PLATFORM up" [expanded] [ref=e6] [cursor=pointer]:
+          - generic [ref=e7]: PLATFORM
+          - img "up" [ref=e9]:
+            - img [ref=e10]
+        - generic [ref=e12]:
+          - button "home Home" [ref=e13] [cursor=pointer]:
+            - img "home" [ref=e15]:
+              - img [ref=e16]
+            - generic [ref=e19]: Home
+          - button "+ Quick Access" [ref=e21] [cursor=pointer]:
+            - generic [ref=e22]: +
+            - generic [ref=e24]: Quick Access
+      - generic [ref=e25]:
+        - button "APP up" [expanded] [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: APP
+          - img "up" [ref=e29]:
+            - img [ref=e30]
+        - button "S Select App Click to switch" [ref=e33] [cursor=pointer]:
+          - generic [ref=e34]: S
+          - generic [ref=e35]:
+            - generic [ref=e36]: Select App
+            - generic [ref=e37]: Click to switch
+    - generic [ref=e38]:
+      - img "Platform Logo" [ref=e40] [cursor=pointer]
+      - generic [ref=e41]:
+        - img "search" [ref=e43]:
+          - img [ref=e44]
+        - textbox "Search workspaces, pipelines, assets..." [ref=e46]
+      - generic [ref=e47]:
+        - button "Collapse sidebar" [ref=e48] [cursor=pointer]:
+          - img "collapse" [ref=e49]
+        - button "Help" [ref=e50] [cursor=pointer]:
+          - img "question-circle" [ref=e51]:
+            - img [ref=e52]
+        - button "Notifications" [ref=e55] [cursor=pointer]:
+          - generic [ref=e56]:
+            - img "bell" [ref=e57]:
+              - img [ref=e58]
+            - superscript [ref=e60]
+        - button "Settings" [ref=e62] [cursor=pointer]:
+          - img "setting" [ref=e63]:
+            - img [ref=e64]
+        - button "Appearance Light" [ref=e68] [cursor=pointer]:
+          - generic [ref=e69]:
+            - generic [ref=e70]: Appearance
+            - generic [ref=e71]: Light
+          - img [ref=e72]
+        - generic [ref=e76] [cursor=pointer]:
+          - generic [ref=e77]: U
+          - img "down" [ref=e78]:
+            - img [ref=e79]
+    - main [ref=e81]:
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - generic [ref=e86]:
+            - generic [ref=e87]: Total Pipeline
+            - generic [ref=e88]: "8"
+            - generic [ref=e89]:
+              - generic [ref=e90]: Ingestion:1
+              - generic [ref=e91]: Transformation:6
+              - generic [ref=e92]: Orchestrator:1
+          - generic [ref=e94]:
+            - generic [ref=e95]: Total Triggered
+            - generic [ref=e96]: "14"
+            - generic [ref=e97]:
+              - generic [ref=e98]: Success:12
+              - generic [ref=e99]: Failed:2
+          - generic [ref=e101]:
+            - generic [ref=e102]: Total Data Sources
+            - generic [ref=e103]: "3"
+            - generic [ref=e104]: Total Connections
+          - generic [ref=e106]:
+            - generic [ref=e107]: Total Workflows
+            - generic [ref=e108]: "1"
+            - generic [ref=e109]: Total Orchestrators
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - generic [ref=e113]: Quick Access
+            - generic [ref=e114]:
+              - button "Connections Connections" [ref=e116] [cursor=pointer]:
+                - img "Connections" [ref=e118]
+                - generic [ref=e119]: Connections
+              - button "Ingestion Ingestion" [ref=e121] [cursor=pointer]:
+                - img "Ingestion" [ref=e123]
+                - generic [ref=e124]: Ingestion
+              - button "Transformation Transformation" [ref=e126] [cursor=pointer]:
+                - img "Transformation" [ref=e128]
+                - generic [ref=e129]: Transformation
+              - button "Orchestrator Orchestrator" [ref=e131] [cursor=pointer]:
+                - img "Orchestrator" [ref=e133]
+                - generic [ref=e134]: Orchestrator
+              - button "Monitoring Monitoring" [ref=e136] [cursor=pointer]:
+                - img "Monitoring" [ref=e138]
+                - generic [ref=e139]: Monitoring
+              - button "appstore Apps" [ref=e141] [cursor=pointer]:
+                - img "appstore" [ref=e143]:
+                  - img [ref=e144]
+                - generic [ref=e146]: Apps
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]:
+                - button "clock-circle Recent" [ref=e150] [cursor=pointer]:
+                  - img "clock-circle" [ref=e151]:
+                    - img [ref=e152]
+                  - text: Recent
+                - button "star Favorites" [ref=e155] [cursor=pointer]:
+                  - img "star" [ref=e156]:
+                    - img [ref=e157]
+                  - text: Favorites
+              - generic [ref=e159]:
+                - img "search" [ref=e160]:
+                  - img [ref=e161]
+                - textbox "Search workspaces, pipelines, assets..." [ref=e163]
+            - generic [ref=e168]:
+              - table [ref=e172]:
+                - rowgroup [ref=e173]:
+                  - row "Name Type Workspace Status Time" [ref=e174]:
+                    - columnheader "Name" [ref=e175]
+                    - columnheader "Type" [ref=e176]
+                    - columnheader "Workspace" [ref=e177]
+                    - columnheader "Status" [ref=e178]
+                    - columnheader "Time" [ref=e179]
+                - rowgroup [ref=e180]:
+                  - row "testtttting Ingestion CICD_New Active 5 mins ago" [ref=e181]:
+                    - cell "testtttting" [ref=e182]
+                    - cell "Ingestion" [ref=e183]
+                    - cell "CICD_New" [ref=e184]
+                    - cell "Active" [ref=e185]:
+                      - generic [ref=e186]: Active
+                    - cell "5 mins ago" [ref=e187]
+                  - row "final Transformation CICD_New Active 3 hrs ago" [ref=e188]:
+                    - cell "final" [ref=e189]
+                    - cell "Transformation" [ref=e190]
+                    - cell "CICD_New" [ref=e191]
+                    - cell "Active" [ref=e192]:
+                      - generic [ref=e193]: Active
+                    - cell "3 hrs ago" [ref=e194]
+                  - row "custom_script_bukd_deploy Transformation CICD_New Active 3 hrs ago" [ref=e195]:
+                    - cell "custom_script_bukd_deploy" [ref=e196]
+                    - cell "Transformation" [ref=e197]
+                    - cell "CICD_New" [ref=e198]
+                    - cell "Active" [ref=e199]:
+                      - generic [ref=e200]: Active
+                    - cell "3 hrs ago" [ref=e201]
+                  - row "save_check_uat Transformation CICD_New Active 3 hrs ago" [ref=e202]:
+                    - cell "save_check_uat" [ref=e203]
+                    - cell "Transformation" [ref=e204]
+                    - cell "CICD_New" [ref=e205]
+                    - cell "Active" [ref=e206]:
+                      - generic [ref=e207]: Active
+                    - cell "3 hrs ago" [ref=e208]
+                  - row "Orchestrator2026.02.18.15.45.421 Orchestrator AutomationDataNexus Active 3 hrs ago" [ref=e209]:
+                    - cell "Orchestrator2026.02.18.15.45.421" [ref=e210]
+                    - cell "Orchestrator" [ref=e211]
+                    - cell "AutomationDataNexus" [ref=e212]
+                    - cell "Active" [ref=e213]:
+                      - generic [ref=e214]: Active
+                    - cell "3 hrs ago" [ref=e215]
+                  - row "TestingTransformPipeline2026.02.18.16.16 Transformation AutomationDataNexus Active 3 hrs ago" [ref=e216]:
+                    - cell "TestingTransformPipeline2026.02.18.16.16" [ref=e217]
+                    - cell "Transformation" [ref=e218]
+                    - cell "AutomationDataNexus" [ref=e219]
+                    - cell "Active" [ref=e220]:
+                      - generic [ref=e221]: Active
+                    - cell "3 hrs ago" [ref=e222]
+                  - row "save_deply_check Transformation CICD_New Active 3 hrs ago" [ref=e223]:
+                    - cell "save_deply_check" [ref=e224]
+                    - cell "Transformation" [ref=e225]
+                    - cell "CICD_New" [ref=e226]
+                    - cell "Active" [ref=e227]:
+                      - generic [ref=e228]: Active
+                    - cell "3 hrs ago" [ref=e229]
+                  - row "asdfasdfasdfasdfasd Transformation CICD_New Active 3 hrs ago" [ref=e230]:
+                    - cell "asdfasdfasdfasdfasd" [ref=e231]
+                    - cell "Transformation" [ref=e232]
+                    - cell "CICD_New" [ref=e233]
+                    - cell "Active" [ref=e234]:
+                      - generic [ref=e235]: Active
+                    - cell "3 hrs ago" [ref=e236]
+              - list [ref=e237]:
+                - listitem [ref=e238]: Showing 1 to 8 of 10 records
+                - listitem "Previous Page" [ref=e239]:
+                  - button "left" [disabled] [ref=e240]:
+                    - img "left" [ref=e241]:
+                      - img [ref=e242]
+                - listitem "1" [ref=e244] [cursor=pointer]:
+                  - generic [ref=e245]: "1"
+                - listitem "2" [ref=e246] [cursor=pointer]:
+                  - generic [ref=e247]: "2"
+                - listitem "Next Page" [ref=e248] [cursor=pointer]:
+                  - button "right" [ref=e249]:
+                    - img "right" [ref=e250]:
+                      - img [ref=e251]
+                - listitem [ref=e253]:
+                  - generic "Page Size" [ref=e254] [cursor=pointer]:
+                    - generic [ref=e256]:
+                      - combobox "Page Size" [ref=e258]
+                      - generic "8 / page" [ref=e259]
+                    - generic:
+                      - img:
+                        - img
+  - dialog "Quick Access Connections" [ref=e260]:
+    - generic [ref=e261]:
+      - generic [ref=e262]:
+        - generic [ref=e263]:
+          - heading "Select App — Connections" [level=2] [ref=e264]
+          - paragraph [ref=e265]: Choose an application to open the Connections feature
+        - button "Close" [ref=e266] [cursor=pointer]:
+          - img "close" [ref=e267]:
+            - img [ref=e268]
+      - generic [ref=e270]:
+        - generic [ref=e271]:
+          - generic [ref=e272]:
+            - img "search":
+              - img
+            - textbox "Search App" [active] [ref=e273]
+          - generic [ref=e274]:
+            - button "Grid view" [ref=e275] [cursor=pointer]:
+              - img "appstore" [ref=e276]:
+                - img [ref=e277]
+            - button "List view" [ref=e279] [cursor=pointer]:
+              - img "bars" [ref=e280]:
+                - img [ref=e281]
+        - generic [ref=e284] [cursor=pointer]:
+          - img "appstore" [ref=e285]:
+            - img [ref=e286]
+          - text: All Apps
+        - generic [ref=e288]:
+          - button "C CICD_Fabric CICD_Fabric clock-circle 3/27/2026 unordered-list Connections right" [ref=e289] [cursor=pointer]:
+            - generic [ref=e290]: C
+            - generic [ref=e291]:
+              - generic [ref=e292]: CICD_Fabric
+              - generic "CICD_Fabric" [ref=e293]
+            - generic [ref=e294]:
+              - generic [ref=e295]:
+                - generic [ref=e296]:
+                  - img "clock-circle" [ref=e297]:
+                    - img [ref=e298]
+                  - text: 3/27/2026
+                - generic [ref=e301]:
+                  - img "unordered-list" [ref=e302]:
+                    - img [ref=e303]
+                  - text: Connections
+              - img "right" [ref=e306]:
+                - img [ref=e307]
+          - button "D dasda asdasd clock-circle 4/8/2026 unordered-list Connections right" [ref=e309] [cursor=pointer]:
+            - generic [ref=e310]: D
+            - generic [ref=e311]:
+              - generic [ref=e312]: dasda
+              - generic "asdasd" [ref=e313]
+            - generic [ref=e314]:
+              - generic [ref=e315]:
+                - generic [ref=e316]:
+                  - img "clock-circle" [ref=e317]:
+                    - img [ref=e318]
+                  - text: 4/8/2026
+                - generic [ref=e321]:
+                  - img "unordered-list" [ref=e322]:
+                    - img [ref=e323]
+                  - text: Connections
+              - img "right" [ref=e326]:
+                - img [ref=e327]
+          - button "H hggj hjg clock-circle 6 days ago unordered-list Connections right" [ref=e329] [cursor=pointer]:
+            - generic [ref=e330]: H
+            - generic [ref=e331]:
+              - generic [ref=e332]: hggj
+              - generic "hjg" [ref=e333]
+            - generic [ref=e334]:
+              - generic [ref=e335]:
+                - generic [ref=e336]:
+                  - img "clock-circle" [ref=e337]:
+                    - img [ref=e338]
+                  - text: 6 days ago
+                - generic [ref=e341]:
+                  - img "unordered-list" [ref=e342]:
+                    - img [ref=e343]
+                  - text: Connections
+              - img "right" [ref=e346]:
+                - img [ref=e347]
+          - button "N New_ENV_Test MDM clock-circle 4/9/2026 unordered-list Connections right" [ref=e349] [cursor=pointer]:
+            - generic [ref=e350]: "N"
+            - generic [ref=e351]:
+              - generic [ref=e352]: New_ENV_Test
+              - generic [ref=e353]: MDM
+            - generic [ref=e354]:
+              - generic [ref=e355]:
+                - generic [ref=e356]:
+                  - img "clock-circle" [ref=e357]:
+                    - img [ref=e358]
+                  - text: 4/9/2026
+                - generic [ref=e361]:
+                  - img "unordered-list" [ref=e362]:
+                    - img [ref=e363]
+                  - text: Connections
+              - img "right" [ref=e366]:
+                - img [ref=e367]
+          - button "N NewApp adb clock-circle 6 days ago unordered-list Connections right" [ref=e369] [cursor=pointer]:
+            - generic [ref=e370]: "N"
+            - generic [ref=e371]:
+              - generic [ref=e372]: NewApp
+              - generic "adb" [ref=e373]
+            - generic [ref=e374]:
+              - generic [ref=e375]:
+                - generic [ref=e376]:
+                  - img "clock-circle" [ref=e377]:
+                    - img [ref=e378]
+                  - text: 6 days ago
+                - generic [ref=e381]:
+                  - img "unordered-list" [ref=e382]:
+                    - img [ref=e383]
+                  - text: Connections
+              - img "right" [ref=e386]:
+                - img [ref=e387]
+          - button "R RGM - Promo Pulse Data Nexus clock-circle 3/17/2026 unordered-list Connections right" [ref=e389] [cursor=pointer]:
+            - generic [ref=e390]: R
+            - generic [ref=e391]:
+              - generic [ref=e392]: RGM - Promo Pulse
+              - generic [ref=e393]: Data Nexus
+            - generic [ref=e394]:
+              - generic [ref=e395]:
+                - generic [ref=e396]:
+                  - img "clock-circle" [ref=e397]:
+                    - img [ref=e398]
+                  - text: 3/17/2026
+                - generic [ref=e401]:
+                  - img "unordered-list" [ref=e402]:
+                    - img [ref=e403]
+                  - text: Connections
+              - img "right" [ref=e406]:
+                - img [ref=e407]
+          - button "R RGM_PROMO MDM clock-circle 6 days ago unordered-list Connections right" [ref=e409] [cursor=pointer]:
+            - generic [ref=e410]: R
+            - generic [ref=e411]:
+              - generic [ref=e412]: RGM_PROMO
+              - generic [ref=e413]: MDM
+            - generic [ref=e414]:
+              - generic [ref=e415]:
+                - generic [ref=e416]:
+                  - img "clock-circle" [ref=e417]:
+                    - img [ref=e418]
+                  - text: 6 days ago
+                - generic [ref=e421]:
+                  - img "unordered-list" [ref=e422]:
+                    - img [ref=e423]
+                  - text: Connections
+              - img "right" [ref=e426]:
+                - img [ref=e427]
+          - button "T Test_ADB Test_ADB clock-circle 1 day ago unordered-list Connections right" [ref=e429] [cursor=pointer]:
+            - generic [ref=e430]: T
+            - generic [ref=e431]:
+              - generic [ref=e432]: Test_ADB
+              - generic "Test_ADB" [ref=e433]
+            - generic [ref=e434]:
+              - generic [ref=e435]:
+                - generic [ref=e436]:
+                  - img "clock-circle" [ref=e437]:
+                    - img [ref=e438]
+                  - text: 1 day ago
+                - generic [ref=e441]:
+                  - img "unordered-list" [ref=e442]:
+                    - img [ref=e443]
+                  - text: Connections
+              - img "right" [ref=e446]:
+                - img [ref=e447]
+          - button "T TestADB Data Nexus clock-circle 3/17/2026 unordered-list Connections right" [ref=e449] [cursor=pointer]:
+            - generic [ref=e450]: T
+            - generic [ref=e451]:
+              - generic [ref=e452]: TestADB
+              - generic [ref=e453]: Data Nexus
+            - generic [ref=e454]:
+              - generic [ref=e455]:
+                - generic [ref=e456]:
+                  - img "clock-circle" [ref=e457]:
+                    - img [ref=e458]
+                  - text: 3/17/2026
+                - generic [ref=e461]:
+                  - img "unordered-list" [ref=e462]:
+                    - img [ref=e463]
+                  - text: Connections
+              - img "right" [ref=e466]:
+                - img [ref=e467]
+          - button "T Testing Test Workspace clock-circle 3/13/2026 unordered-list Connections right" [ref=e469] [cursor=pointer]:
+            - generic [ref=e470]: T
+            - generic [ref=e471]:
+              - generic [ref=e472]: Testing
+              - generic "Test Workspace" [ref=e473]
+            - generic [ref=e474]:
+              - generic [ref=e475]:
+                - generic [ref=e476]:
+                  - img "clock-circle" [ref=e477]:
+                    - img [ref=e478]
+                  - text: 3/13/2026
+                - generic [ref=e481]:
+                  - img "unordered-list" [ref=e482]:
+                    - img [ref=e483]
+                  - text: Connections
+              - img "right" [ref=e486]:
+                - img [ref=e487]
+          - button "T testing 3 Test Workspace3 clock-circle 3/13/2026 unordered-list Connections right" [ref=e489] [cursor=pointer]:
+            - generic [ref=e490]: T
+            - generic [ref=e491]:
+              - generic [ref=e492]: testing 3
+              - generic "Test Workspace3" [ref=e493]
+            - generic [ref=e494]:
+              - generic [ref=e495]:
+                - generic [ref=e496]:
+                  - img "clock-circle" [ref=e497]:
+                    - img [ref=e498]
+                  - text: 3/13/2026
+                - generic [ref=e501]:
+                  - img "unordered-list" [ref=e502]:
+                    - img [ref=e503]
+                  - text: Connections
+              - img "right" [ref=e506]:
+                - img [ref=e507]
+          - button "T testing 4 testing clock-circle 3/13/2026 unordered-list Connections right" [ref=e509] [cursor=pointer]:
+            - generic [ref=e510]: T
+            - generic [ref=e511]:
+              - generic [ref=e512]: testing 4
+              - generic "testing" [ref=e513]
+            - generic [ref=e514]:
+              - generic [ref=e515]:
+                - generic [ref=e516]:
+                  - img "clock-circle" [ref=e517]:
+                    - img [ref=e518]
+                  - text: 3/13/2026
+                - generic [ref=e521]:
+                  - img "unordered-list" [ref=e522]:
+                    - img [ref=e523]
+                  - text: Connections
+              - img "right" [ref=e526]:
+                - img [ref=e527]
+          - button "T Testing_Fabric Testing_Fabric clock-circle 3/25/2026 unordered-list Connections right" [ref=e529] [cursor=pointer]:
+            - generic [ref=e530]: T
+            - generic [ref=e531]:
+              - generic [ref=e532]: Testing_Fabric
+              - generic "Testing_Fabric" [ref=e533]
+            - generic [ref=e534]:
+              - generic [ref=e535]:
+                - generic [ref=e536]:
+                  - img "clock-circle" [ref=e537]:
+                    - img [ref=e538]
+                  - text: 3/25/2026
+                - generic [ref=e541]:
+                  - img "unordered-list" [ref=e542]:
+                    - img [ref=e543]
+                  - text: Connections
+              - img "right" [ref=e546]:
+                - img [ref=e547]
+          - button "T Testing4 Test Workspace clock-circle 4/3/2026 unordered-list Connections right" [ref=e549] [cursor=pointer]:
+            - generic [ref=e550]: T
+            - generic [ref=e551]:
+              - generic [ref=e552]: Testing4
+              - generic "Test Workspace" [ref=e553]
+            - generic [ref=e554]:
+              - generic [ref=e555]:
+                - generic [ref=e556]:
+                  - img "clock-circle" [ref=e557]:
+                    - img [ref=e558]
+                  - text: 4/3/2026
+                - generic [ref=e561]:
+                  - img "unordered-list" [ref=e562]:
+                    - img [ref=e563]
+                  - text: Connections
+              - img "right" [ref=e566]:
+                - img [ref=e567]
+          - button "T testinggg testt21 clock-circle 4/8/2026 unordered-list Connections right" [ref=e569] [cursor=pointer]:
+            - generic [ref=e570]: T
+            - generic [ref=e571]:
+              - generic [ref=e572]: testinggg
+              - generic "testt21" [ref=e573]
+            - generic [ref=e574]:
+              - generic [ref=e575]:
+                - generic [ref=e576]:
+                  - img "clock-circle" [ref=e577]:
+                    - img [ref=e578]
+                  - text: 4/8/2026
+                - generic [ref=e581]:
+                  - img "unordered-list" [ref=e582]:
+                    - img [ref=e583]
+                  - text: Connections
+              - img "right" [ref=e586]:
+                - img [ref=e587]

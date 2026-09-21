@@ -1,0 +1,14 @@
+{
+  "appUrl": "http://20.244.108.100:7004",
+  "workspaceName": "Governance_ADB",
+  "workspaceId": "7405617719355782",
+  "dateWindow": { "start": "2026-08-03", "end": "2026-08-09" },
+  "tolerancePercent": 0.5,
+  "testNotebookName": "tf_new_target_Sales",
+  "dashboards": [
+    { "name": "Overview", "path": "/overview", "sidebarLinkText": "Overview", "kpis": ["Spend · last 30 days", "Optimization opportunity", "Workspace · 24h", "Lineage health", "Job health", "Open recommendations"] },
+    { "name": "Unified Cost Analysis", "path": "/dashboards", "sidebarLinkText": "FinOps Dashboards", "kpis": ["Total spend", "Total DBU", "Spend by compute type", "Spend over time", "DBU consumption over time", "Daily spend by compute type", "Spend by team", "Spend by environment", "Top spenders", "Share of spend by workspace", "Last refresh"] },
+    { "name": "Job Operations", "path": "/dashboards", "sidebarLinkText": "FinOps Dashboards", "subTab": "Job Operations & Cost", "kpis": ["Total job runs", "Failure rate", "Total runtime", "Active jobs"] },
+    { "name": "Recommendations", "path": "/recommendations", "sidebarLinkText": "Recommendations", "kpis": ["Open recommendations", "Savings / mo"] }
+  ]
+}

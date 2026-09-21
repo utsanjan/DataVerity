@@ -1,0 +1,34 @@
+- generic [ref=e151]:
+  - generic [ref=e153]:
+    - img "One Platform Logo" [ref=e155]
+    - generic [ref=e156]:
+      - generic [ref=e157]: by
+      - img "Polestar Logo" [ref=e158]
+    - generic [ref=e159]:
+      - paragraph [ref=e161]: Login
+      - generic [ref=e163]:
+        - generic [ref=e166]:
+          - generic [ref=e169]: Email
+          - textbox "Email" [ref=e173]:
+            - /placeholder: Enter Email
+            - text: admin@example.com
+        - generic [ref=e176]:
+          - generic [ref=e179]: Password
+          - generic [ref=e183]:
+            - textbox "Password" [active] [ref=e184]:
+              - /placeholder: Enter Password
+            - img "eye-invisible" [ref=e186] [cursor=pointer]:
+              - img [ref=e187]
+        - generic [ref=e196] [cursor=pointer]:
+          - checkbox "Remember Me" [ref=e198]
+          - generic [ref=e200]: Remember Me
+        - button "LOGIN" [ref=e202] [cursor=pointer]
+      - generic [ref=e204]:
+        - paragraph [ref=e205]: Login with
+        - generic [ref=e206]:
+          - img "Microsoft" [ref=e207]
+          - generic [ref=e208]: Microsoft
+      - generic [ref=e209]:
+        - button "Forgot Password ?" [ref=e210] [cursor=pointer]
+        - generic [ref=e211]: Contact administrator
+  - img "Login Background" [ref=e214]

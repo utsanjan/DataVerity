@@ -1,0 +1,124 @@
+Test Case ID,Test Case Title,Steps,Expected Result,Actual Results,Category,status
+TP-POV-001,Render Promo Overview shell with KPI cards and core controls,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Review the KPI cards and core shell controls.",The Promo Overview shell loads with KPI cards and core controls visible.,"Fresh headed rerun of the Promo Overview shell baseline passed for the KPI cards plus the Filters, Monthly, and Quarterly controls.",KPI Navigator,Passed
+TP-POV-003,Show Promos tab workspace and switch Grid and Card views,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Promos tab.
+6. Switch between Grid View and Card View.",The Promos tab opens and both Grid View and Card View can be selected.,Defined from the existing Promo Overview baseline suite in tests/e2e/promo-pulse-promo.spec.js but not freshly rerun end-to-end in this pass.,Promos Tab,Not Revalidated
+TP-POV-004,Show all-promo insights workspace with cross-KPI cards,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Intelligence tab.
+6. Review the all-promo insights workspace.",The Intelligence tab shows the all-promo insights workspace with cross-KPI insight cards.,Defined from the existing Promo Overview baseline suite in tests/e2e/promo-pulse-promo.spec.js but not freshly rerun end-to-end in this pass.,Intelligence Tab,Not Revalidated
+TP-POV-005,Expand Promo Overview filters and narrow promo count,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Promos tab.
+6. Expand filters and apply a region filter.
+7. Review the promo count.",Applying a filter reduces or changes the visible promo count consistently.,"The longer headed baseline rerun was interrupted by a helper re-entry failure before this case completed, so this row was not freshly revalidated in this pass.",Common Filter Bar,Not Revalidated
+TP-POV-006,Support card pagination and page size controls,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Promos tab.
+6. Switch to Card View.
+7. Change page size and navigate to the next page.",Card View supports pagination and page-size controls without breaking the module.,Defined from the existing Promo Overview baseline suite in tests/e2e/promo-pulse-promo.spec.js but not freshly rerun end-to-end in this pass.,Promos Tab,Not Revalidated
+TP-POV-007,Expose promo row actions or keep empty state stable,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Promos tab.
+6. Review available row actions or the empty state.",The Promos tab either exposes valid row actions for available promos or shows a stable empty state.,Defined from the existing Promo Overview baseline suite in tests/e2e/promo-pulse-promo.spec.js but not freshly rerun end-to-end in this pass.,Promos Tab,Not Revalidated
+TP-POV-008,Persist Promos tab and Grid View after reload,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Promos tab and select Grid View.
+6. Reload the page.
+7. Review the restored state.",The Promos tab and selected Grid View persist after reload.,Defined from the existing Promo Overview baseline suite in tests/e2e/promo-pulse-promo.spec.js but not freshly rerun end-to-end in this pass.,Promos Tab,Not Revalidated
+TP-POV-010,Expose custom date range selector on Promo Overview,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Expand the filter bar.
+6. Review the time filter controls for a custom date range selector.",The Promo Overview filter bar exposes the documented custom date range selector.,Retested in the focused Promo Overview story-gap suite: the live Promo Overview filter bar does not render a custom date range selector.,Common Filter Bar,Failed
+TP-POV-011,Expose Yearly time aggregation on Promo Overview,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Review the time aggregation controls in the filter bar.
+6. Look for a Yearly option alongside the other aggregation controls.",The Promo Overview filter bar exposes the documented Yearly time aggregation option.,Retested in the focused Promo Overview story-gap suite: the live Promo Overview filter bar does not render a Yearly time aggregation option.,Common Filter Bar,Failed
+TP-POV-020,Expose View all insights control for regular KPI intelligence,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select a regular KPI such as Total Promo Spend.
+6. Review the Intelligence tab header and controls.",The regular KPI intelligence panel exposes the documented View all insights control.,"Retested in the focused Promo Overview story-gap suite: after selecting Total Promo Spend, the live Promo Overview intelligence panel did not render a View all insights control.",Intelligence Tab,Failed
+TP-POV-021,Display Promo Count by Brand chart for Total Active Promos,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Active Promos KPI.
+6. Review the Intelligence tab for the Promo Count by Brand chart.",The Total Active Promos intelligence panel displays the documented Promo Count by Brand chart.,Retested in the focused Promo Overview story-gap suite: the live Total Active Promos intelligence panel did not render the documented Promo Count by Brand chart.,Intelligence Tab,Failed
+TP-POV-022,Display Promo Distribution by Channel chart for Total Active Promos,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Active Promos KPI.
+6. Review the Intelligence tab for the Promo Distribution by Channel chart.",The Total Active Promos intelligence panel displays the documented Promo Distribution by Channel chart.,Retested in the focused Promo Overview story-gap suite: the live Total Active Promos intelligence panel did not render the documented Promo Distribution by Channel chart.,Intelligence Tab,Failed
+TP-POV-023,Display Weekly Promo Density Heatmap for Total Active Promos,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Active Promos KPI.
+6. Review the Intelligence tab for the Weekly Promo Density Heatmap.",The Total Active Promos intelligence panel displays the documented Weekly Promo Density Heatmap.,Retested in the focused Promo Overview story-gap suite: the live Total Active Promos intelligence panel did not render the documented Weekly Promo Density Heatmap.,Intelligence Tab,Failed
+TP-POV-024,Display Spend by Promo chart for Total Promo Spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Promo Spend KPI.
+6. Review the Intelligence tab for the Spend by Promo chart.",The Total Promo Spend intelligence panel displays the documented Spend by Promo chart.,Retested in the focused Promo Overview story-gap suite: the live Total Promo Spend intelligence panel did not render the documented Spend by Promo chart.,Intelligence Tab,Failed
+TP-POV-025,Display Spend Trend chart for Total Promo Spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Promo Spend KPI.
+6. Review the Intelligence tab for the Spend Trend chart.",The Total Promo Spend intelligence panel displays the documented Spend Trend chart.,Retested in the focused Promo Overview story-gap suite: the live Total Promo Spend intelligence panel did not render the documented Spend Trend chart.,Intelligence Tab,Failed
+TP-POV-026,Display Spend by Channel chart for Total Promo Spend,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Total Promo Spend KPI.
+6. Review the Intelligence tab for the Spend by Channel chart.",The Total Promo Spend intelligence panel displays the documented Spend by Channel chart.,Retested in the focused Promo Overview story-gap suite: the live Total Promo Spend intelligence panel did not render the documented Spend by Channel chart.,Intelligence Tab,Failed
+TP-POV-030,Display ROI vs Spend chart for Average Promo ROI,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Average Promo ROI KPI.
+6. Review the Intelligence tab for the ROI vs Spend chart.",The Average Promo ROI intelligence panel displays the documented ROI vs Spend chart.,Retested in the focused Promo Overview story-gap suite: the live Average Promo ROI intelligence panel did not render the documented ROI vs Spend chart.,Intelligence Tab,Failed
+TP-POV-031,Display ROI Distribution chart for Average Promo ROI,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Average Promo ROI KPI.
+6. Review the Intelligence tab for the ROI Distribution chart.",The Average Promo ROI intelligence panel displays the documented ROI Distribution chart.,Retested in the focused Promo Overview story-gap suite: the live Average Promo ROI intelligence panel did not render the documented ROI Distribution chart.,Intelligence Tab,Failed
+TP-POV-032,Display ROI Trend Over Time chart for Average Promo ROI,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Select the Average Promo ROI KPI.
+6. Review the Intelligence tab for the ROI Trend Over Time chart.",The Average Promo ROI intelligence panel displays the documented ROI Trend Over Time chart.,Retested in the focused Promo Overview story-gap suite: the live Average Promo ROI intelligence panel did not render the documented ROI Trend Over Time chart.,Intelligence Tab,Failed
+TP-POV-040,Expose a working Calendar view in the Promos tab,"1. Open 1Platform.
+2. Log in with a valid test account.
+3. Select the RGM - Promo Pulse app.
+4. Open Promo Pulse Dashboard -> Promo Overview.
+5. Open the Promos tab.
+6. Click Calendar.
+7. Confirm the Calendar view button enters the active state.",The Promos tab exposes a working Calendar view toggle.,"Fresh headed focused rerun passed: the Calendar button was visible, clickable, and entered the active state.",Promos Tab,Passed
