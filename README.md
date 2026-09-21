@@ -1,12 +1,14 @@
-# PlayJS
+# DataVerity
 
-Playwright automation for three products:
+DataVerity is a Playwright-based data validation automation platform for testing product interfaces against their source-of-truth systems. It captures live UI values, executes Databricks SQL validation queries, compares the results, and produces human-readable HTML and machine-readable reports.
+
+The project currently covers three products:
 
 - **Promo Pulse** — UI end-to-end tests
 - **Wealth Pulse** — Leadership and Advisor KPI validation against Databricks
-- **Governance** — dashboard KPI validation against Databricks
+- **Governance** — FinOps dashboard KPI and notebook recommendation validation against Databricks
 
-A new teammate should only need this README, a copied `.env`, and the npm scripts below.
+A new teammate should only need this README, a copied `.env`, and the npm scripts below to run DataVerity.
 
 ## First-time setup
 
@@ -20,19 +22,19 @@ Fill `.env` with real login and Databricks credentials. Never commit `.env`.
 
 Promo Pulse reads `BASE_URL`, `TEST_USER`, and `TEST_PASS`. Wealth Pulse uses the same login pair. Governance uses `GOVERNANCE_USER` / `GOVERNANCE_PASS` plus the Databricks variables.
 
-## Daily commands
+## Validation commands
 
 | What you want | Command |
 |---|---|
 | Promo Pulse UI suite | `npm test` |
 | Wealth Pulse validation (Leadership + Advisor) | `npm run wealth-pulse-validate` |
 | Governance validation | `npm run governance-validate` |
-| Rebuild HTML reports from the latest CSVs | `npm run reports:build` |
-| Combined Governance + Wealth Pulse report | `npm run master-report` |
+| Rebuild all HTML reports from the latest CSVs | `npm run reports:build` |
+| Generate the DataVerity master report | `npm run master-report` |
 | Open the master report in a browser | open `index.html` in the project root |
 | Open the Playwright HTML report | `npm run test:report` |
 
-Reports land in `artifacts/reports/`:
+DataVerity reports land in `artifacts/reports/`:
 
 - `html/` — human-readable validation reports, including `master-data-validation-report.html`
 - `csv/` — raw UI, Databricks, and comparison tables
@@ -63,13 +65,13 @@ artifacts/       Generated output only (gitignored)
 | `docs/<product>/` | Product-specific notes |
 | `fixtures/<product>/` | Source test-case files, not generated reports |
 
-## How validation works
+## DataVerity pipeline
 
-Wealth Pulse and Governance follow the same three-step pipeline:
+Wealth Pulse and Governance follow the same three-step validation pipeline:
 
 1. A UI spec reads values from the live app and writes a CSV.
 2. A Databricks spec runs the SQL in `config/` and writes a second CSV.
-3. A reporter compares those CSVs and writes HTML + CSV under `artifacts/reports/`.
+3. A DataVerity reporter compares those CSVs and writes HTML + CSV under `artifacts/reports/`.
 
 Promo Pulse is a conventional Playwright UI suite. It uses `playwright.config.js` and a saved login session from `tests/setup/auth.setup.js`.
 
@@ -77,7 +79,7 @@ Wealth Pulse and Governance log in themselves. Use `playwright.validation.config
 
 Do not commit generated files. `playwright/.auth/` is a saved login session. `artifacts/` and `test-results/` are outputs. Put new specs under `tests/<product>/`, not `tests/archive/`.
 
-## Adding another product later
+## Adding another product
 
 1. Add `config/<product>/`.
 2. Add helpers and a reporter under `src/<product>/`.
