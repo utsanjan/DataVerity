@@ -4,9 +4,9 @@ DataVerity is a Playwright-based data validation automation platform for testing
 
 The project currently covers three products:
 
-- **Promo Pulse** — UI end-to-end tests
-- **Wealth Pulse** — Leadership and Advisor KPI validation against Databricks
-- **Governance** — FinOps dashboard KPI and notebook recommendation validation against Databricks
+- **Promo Pulse** - UI end-to-end tests
+- **Wealth Pulse** - Leadership and Advisor KPI validation against Databricks
+- **Governance** - FinOps dashboard KPI and notebook recommendation validation against Databricks
 
 A new teammate should only need this README, a copied `.env`, and the npm scripts below to run DataVerity.
 
@@ -36,11 +36,11 @@ Promo Pulse reads `BASE_URL`, `TEST_USER`, and `TEST_PASS`. Wealth Pulse uses th
 
 DataVerity reports land in `artifacts/reports/`:
 
-- `html/` — human-readable validation reports, including `master-data-validation-report.html`
-- `csv/` — raw UI, Databricks, and comparison tables
-- `excel/` — Playwright execution workbook
-- `json/` — optional machine-readable extras
-- `playwright/` — Playwright HTML report
+- `html/` - human-readable validation reports, including `master-data-validation-report.html`
+- `csv/` - raw UI, Databricks, and comparison tables
+- `excel/` - Playwright execution workbook
+- `json/` - optional machine-readable extras
+- `playwright/` - Playwright HTML report
 
 ## Project map
 
