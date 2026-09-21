@@ -1,4 +1,4 @@
-# DataVerity
+# ✅ DataVerity
 
 DataVerity is a Playwright-based data validation automation platform for testing product interfaces against their source-of-truth systems. It captures live UI values, executes Databricks SQL validation queries, compares the results, and produces human-readable HTML and machine-readable reports.
 
