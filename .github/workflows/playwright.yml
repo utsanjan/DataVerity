@@ -4,6 +4,8 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+env:
+  BASE_URL: ${{ secrets.BASE_URL }}
 jobs:
   test:
     timeout-minutes: 60
@@ -17,8 +19,17 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Verify Playwright configuration
+      run: npm run test:list
     - name: Run Playwright tests
+      # The Promo Pulse app is not reachable from GitHub-hosted runners by default,
+      # so the live suite only runs when BASE_URL is configured as a repository secret.
+      if: ${{ env.BASE_URL != '' }}
       run: npx playwright test
+      env:
+        BASE_URL: ${{ secrets.BASE_URL }}
+        TEST_USER: ${{ secrets.TEST_USER }}
+        TEST_PASS: ${{ secrets.TEST_PASS }}
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
